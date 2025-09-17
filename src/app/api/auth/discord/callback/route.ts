@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     cookiestore.set('token', body.access_token)
     cookiestore.set('user', JSON.stringify(body.user))
     return NextResponse.redirect(new URL('/dashboard', 'http://localhost:3001'))
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Missing code parameter' },
       { status: 400 },
