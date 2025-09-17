@@ -34,3 +34,9 @@ export interface Video {
   updated: Date
   media: VideoMedia
 }
+
+export interface SocialMedia {
+  id: number
+  uri: string
+  type: string
+}

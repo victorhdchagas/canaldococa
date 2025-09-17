@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import * as convert from 'xml-js'
 
 export async function GET() {
-  // https://www.youtube.com/feeds/videos.xml?channel_id=UCIZuoDtcWbJgXwT9p41s2lg
+  // https://www.youtube.com/feeds/videos.xml?channel_id=UCIZuoDtcWbJgXwT9p41s2lg //UCi2Q2vgSu_f6YaH3WbBQxTg
   const xml = await getChannelString()
   const jsonResult = convert.xml2json(xml, {
     compact: true,
