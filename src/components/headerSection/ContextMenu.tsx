@@ -1,15 +1,30 @@
 'use client' // Use 'use client' para que o componente possa ter estado interativo
 
+import URL_PATHS from '@/consts/permissions'
 import {
   ArrowDown01FreeIcons,
   Logout01FreeIcons,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-export default function ContextMenu({ userAvatar }: { userAvatar: string }) {
-  const [isOpen, setIsOpen] = useState(false) // Estado para controlar a visibilidade do menu
+export default function ContextMenu({
+  userAvatar,
+  role,
+}: {
+  userAvatar: string
+  role: string
+}) {
+  const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
+  async function handleLogout() {
+    const response = await fetch('/api/auth/logout')
+    if (response.status == 200) {
+      router.push('/')
+    }
+  }
 
   return (
     <div className="relative">
@@ -32,8 +47,19 @@ export default function ContextMenu({ userAvatar }: { userAvatar: string }) {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg z-10 transition-all duration-300 ease-in-out transform">
           <div className="py-1">
+            {role === 'ADMIN' &&
+              URL_PATHS.get(role)?.map((role) => (
+                <Link
+                  key={role[0]}
+                  href={role[1]}
+                  className="block px-4 py-2 text-sm text-yellow-500 hover:bg-gray-700"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {role[0]}
+                </Link>
+              ))}
             <Link
-              href="/profile"
+              href="/account"
               className="block px-4 py-2 text-sm text-yellow-500 hover:bg-gray-700"
               onClick={() => setIsOpen(false)} // Fecha o menu após o clique
             >
@@ -49,9 +75,8 @@ export default function ContextMenu({ userAvatar }: { userAvatar: string }) {
             <hr className="border-gray-700 my-1" />
             <button
               onClick={() => {
-                // Lógica para logout (ex: chamar uma API de logout)
-                console.log('Logout...')
                 setIsOpen(false)
+                handleLogout()
               }}
               className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-gray-700"
             >

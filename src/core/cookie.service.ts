@@ -1,7 +1,7 @@
 import { User } from '@/types/services'
 import { cookies } from 'next/headers'
 
-export async function getUser(): Promise<User> {
+export async function getUserFromCookies(): Promise<User> {
   const cookieStore = await cookies()
   const userString = cookieStore.get('user')
   if (!!userString && 'value' in userString) {

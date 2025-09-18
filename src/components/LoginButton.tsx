@@ -1,5 +1,7 @@
 'use client'
 
+import { Login02FreeIcons } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginButton() {
@@ -17,9 +19,9 @@ export default function LoginButton() {
   return (
     <button
       onClick={handleLogin}
-      className="text-lg font-bold font-mono p-1 px-2 text-yellow-500 border-r-2 border-b-2 border-amber-600 rounded-2xl mr-2"
+      className="text-lg font-bold font-mono p-2 px-2 bg-gray-950 text-yellow-500 border-[1px] rounded-full border-yellow-900 mr-2"
     >
-      Login
+      <HugeiconsIcon icon={Login02FreeIcons} size={24}></HugeiconsIcon>
     </button>
   )
 }

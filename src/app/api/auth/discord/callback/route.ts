@@ -21,7 +21,6 @@ export async function GET(req: NextRequest) {
       },
     )
     const body = serverResponse.data
-    console.log(serverResponse)
     const cookiestore = await cookies()
     cookiestore.set('token', body.access_token)
     cookiestore.set('user', JSON.stringify(body.user))

@@ -21,7 +21,6 @@ export default function CheckoutButton({
       router.push(response.data.url)
       return
     }
-    console.log(response)
   }
   return (
     <form onSubmit={onSubmit}>
