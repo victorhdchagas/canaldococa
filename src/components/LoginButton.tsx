@@ -14,5 +14,12 @@ export default function LoginButton() {
     router.push(discordAuthUrl)
   }
 
-  return <button onClick={handleLogin}>Login com Discord</button>
+  return (
+    <button
+      onClick={handleLogin}
+      className="text-lg font-bold font-mono p-1 px-2 text-yellow-500 border-r-2 border-b-2 border-amber-600 rounded-2xl mr-2"
+    >
+      Login
+    </button>
+  )
 }

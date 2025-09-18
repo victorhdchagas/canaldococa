@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     const cookiestore = await cookies()
     cookiestore.set('token', body.access_token)
     cookiestore.set('user', JSON.stringify(body.user))
-    return NextResponse.redirect(new URL('/dashboard', 'http://localhost:3001'))
+    return NextResponse.redirect(new URL('/account', 'http://localhost:3001'))
   } catch {
     return NextResponse.json(
       { error: 'Missing code parameter' },

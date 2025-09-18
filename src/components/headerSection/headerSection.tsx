@@ -1,20 +1,29 @@
 import Link from 'next/link'
-import React from 'react'
+import LoginButton from '../LoginButton'
+import { User } from '@/types/services'
+import ContextMenu from './ContextMenu'
 
-export default function HeaderSection() {
+export default async function HeaderSection({
+  authenticated,
+}: {
+  authenticated?: User
+}) {
   return (
-    <header className="grid grid-cols-2  bg-gray-900 text-2xl font-bold text-black  items-center h-[4.25rem] md:container md:mx-auto">
-      <img
-        src="https://placehold.co/128x64/yellow/black"
-        className="border-2 rounded-xl w-auto h-auto object-contain"
-      />
-      <div className="flex justify-end">
-        <Link
-          className="text-lg font-bold font-mono p-1 px-2 text-yellow-500 border-r-2 border-b-2 border-amber-600 rounded-2xl mr-2"
-          href="/login"
-        >
-          Login
+    <header className="grid grid-cols-4  bg-gray-900 text-2xl font-bold text-black  items-center h-[4.25rem] md:container md:mx-auto ">
+      <div className="flex flex-row items-center justify-start gap-1 text-yellow-500 col-span-1 text-2xl">
+        <Link href="/">
+          <img
+            src="assets/coca_head.png"
+            className="border-2 rounded-xl w-[6rem] h-[3.20rem] object-cover bg-red-950"
+          />
         </Link>
+      </div>
+      <span className="justify-start gap-1 text-yellow-500 col-span-2 text-2xl text-center ">
+        Canal do Coca
+      </span>
+      <div className="flex justify-end col-span-1">
+        {!authenticated && <LoginButton />}
+        {authenticated && <ContextMenu userAvatar={authenticated.avatar} />}
       </div>
     </header>
   )

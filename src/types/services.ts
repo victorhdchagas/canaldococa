@@ -40,3 +40,16 @@ export interface SocialMedia {
   uri: string
   type: string
 }
+
+export interface User {
+  id: number
+  email: string
+  avatar: string
+  role: string
+  createdAt: Date
+  discord: {
+    id: string
+    avatar: string
+    email: string
+  }
+}
