@@ -3,6 +3,7 @@ const URL_PATHS = new Map<string, string[][]>()
 
 URL_PATHS.set('ADMIN', [
   ['Painel', '/account/admin'],
+  ['Overlay', '/account/admin/overlay'],
   ['Usuarios', '/account/admin/users'],
 ])
 URL_PATHS.set('USER', [['Minha conta', '/account']])
