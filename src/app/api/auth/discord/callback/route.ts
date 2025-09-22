@@ -6,7 +6,6 @@ export async function GET(req: NextRequest) {
   // Example: handle Discord OAuth callback
   const url = new URL(req.url)
   const code = url.searchParams.get('code')
-
   if (!code) {
     return NextResponse.json(
       { error: 'Missing code parameter' },
@@ -22,14 +21,13 @@ export async function GET(req: NextRequest) {
     )
     const body = serverResponse.data
     const cookiestore = await cookies()
-    cookiestore.set('token', body.access_token)
+    cookiestore.set('token', body.accessToken)
+    cookiestore.set('discordtoken', body.discordAccessToken)
+    cookiestore.set('discordrefreshtoken', body.discordRefreshToken)
     cookiestore.set('user', JSON.stringify(body.user))
     return NextResponse.redirect(new URL('/account', 'http://localhost:3001'))
-  } catch {
-    return NextResponse.json(
-      { error: 'Missing code parameter' },
-      { status: 400 },
-    )
+  } catch (err) {
+    return NextResponse.json({ error: err }, { status: 400 })
   }
   //   return NextResponse.json({ message: 'Discord callback received', code })
 }

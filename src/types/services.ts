@@ -42,14 +42,27 @@ export interface SocialMedia {
 }
 
 export interface User {
+  sub: number
   id: number
-  email: string
+  username: string
   avatar: string
   role: string
   createdAt: Date
-  discord: {
-    id: string
-    avatar: string
-    email: string
-  }
+}
+
+export interface OverlaySubscribersSettings {
+  id: 'subscribers-settings'
+  position:
+    | 'top-left'
+    | 'top'
+    | 'top-right'
+    | 'bottom-left'
+    | 'bottom'
+    | 'bottom-right'
+
+  duration: number
+  image: string
+  sound: string
+  enabled: boolean
+  updatedAt: Date
 }

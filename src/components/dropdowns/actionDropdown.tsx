@@ -34,11 +34,9 @@ export function ActionDropdown({
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Ações</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => onEdit(userId)}>
-          Editar
+          Detalhes
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => onDelete(userId)}>
-          Deletar
-        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => onActivate(userId)}>
           Ativar Apoiador

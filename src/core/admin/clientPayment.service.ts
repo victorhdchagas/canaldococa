@@ -7,7 +7,7 @@ export async function getClientPaymentStatus(
   offset?: number,
 ): Promise<
   | (Pagination & {
-      data: { id: number; name: string; status: string; date: Date }[]
+      data: { id: number; name: string; plan: string; date: Date }[]
     })
   | null
 > {

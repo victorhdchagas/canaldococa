@@ -13,7 +13,7 @@ export default function SubmitButton({
     <button
       type="submit"
       {...props}
-      className="group p-3 flex flex-row justify-center items-center border-2 bg-gray-950 border-amber-700  rounded-lg  mx-2 text-yellow-500 gap-2  transition-all  font-mono cursor-pointer"
+      className="group p-3 flex flex-row justify-center items-center border-2 bg-gray-950 border-amber-700  rounded-lg  mx-2 text-yellow-500 gap-2  transition-all  font-mono cursor-pointer w-40"
     >
       {!props.disabled && (
         <>

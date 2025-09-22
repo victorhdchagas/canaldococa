@@ -1,4 +1,4 @@
-import { getClientPaymentStatus } from '@/core/admin/clientPayment.service'
+import { getPaymentStatus } from '@/core/admin/payment.service'
 import { getUserFromCookies } from '@/core/cookie.service'
 import { unauthorized } from 'next/navigation'
 
@@ -9,10 +9,11 @@ export async function GET() {
       unauthorized()
     }
 
-    const toReturn = await getFakeList() //getClientPaymentStatus()
+    const toReturn = await getPaymentStatus() //getPaymentStatus()
+
     return Response.json({ pagination: { page: 1 }, data: toReturn })
-  } catch {
-    unauthorized()
+  } catch (err) {
+    return Response.json(err, { status: 400 })
   }
 }
 
@@ -20,27 +21,27 @@ async function getFakeList() {
   const fakeList = [
     {
       name: 'Jill Valentine',
-      status: 'PAID',
+      plan: 'LEGEND',
       date: new Date(),
     },
     {
       name: 'Albert Wesker',
-      status: 'PAID',
+      plan: 'LEGEND',
       date: new Date(),
     },
     {
       name: 'Chris Redfield',
-      status: 'CANCELED',
+      plan: 'USER',
       date: new Date(),
     },
     {
       name: 'John Ada Mole',
-      status: 'CANCELED',
+      plan: 'USER',
       date: new Date(),
     },
     {
       name: 'Leon',
-      status: 'PAID',
+      plan: 'LEGEND',
       date: new Date(),
     },
   ]

@@ -59,7 +59,7 @@ function UserTable({
   data: {
     id: number
     name: string
-    status: string
+    plan: string
     date: Date
   }[]
 }) {
@@ -84,9 +84,9 @@ function UserTable({
       </TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px] text-yellow-500">ID</TableHead>
-          <TableHead className="text-yellow-500">User</TableHead>
-          <TableHead className="text-yellow-500">Status</TableHead>
+          <TableHead className="w-[100px] text-yellow-500">Criado em</TableHead>
+          <TableHead className="text-yellow-500">Nome</TableHead>
+          <TableHead className="text-yellow-500">Plano</TableHead>
           <TableHead className="text-right text-yellow-500">Control</TableHead>
         </TableRow>
       </TableHeader>
@@ -99,7 +99,7 @@ function UserTable({
               })}
             </TableCell>
             <TableCell>{payment.name}</TableCell>
-            <TableCell>{payment.status}</TableCell>
+            <TableCell>{payment.plan}</TableCell>
             <TableCell className="text-right">
               <ActionDropdown
                 userId={payment.id}
