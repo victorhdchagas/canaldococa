@@ -5,7 +5,7 @@ export default async function VideoSection() {
   const videos = await getVideos()
 
   return (
-    <section className="flex flex-col mx-auto gap-8 md:gap-2 container overflow-auto min-h-1/2 max-h-1/2">
+    <section className="flex flex-col mx-auto gap-8 md:gap-2 container overflow-auto min-h-1/2 max-h-1/2 bg-gray-900">
       <span className="text-yellow-500 text-4xl mx-auto py-4 font-bold">
         Ultimos vídeos
       </span>
