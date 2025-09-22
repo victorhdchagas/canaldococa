@@ -2,6 +2,13 @@ import { User } from '@/types/services'
 import { importSPKI, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 
+export async function getToken(): Promise<string | null> {
+  const cookieStore = await cookies()
+  const token = cookieStore.get('token')
+  if (token && token.value) return token.value
+  return null
+}
+
 export async function getUserFromCookies(): Promise<User> {
   const cookieStore = await cookies()
   const token = cookieStore.get('token')!.value

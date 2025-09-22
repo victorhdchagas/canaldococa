@@ -94,7 +94,7 @@ export async function getOverlayLink(): Promise<string> {
 export async function updateOverlayLink(): Promise<string> {
   const url = new URL(`${window.location.origin}/api/admin/overlay`)
   const response = await fetch(url, {
-    method: 'PATCH',
+    method: 'POST',
     credentials: 'include',
   })
   if (response.status > 200) {

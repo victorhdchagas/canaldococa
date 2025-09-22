@@ -1,37 +1,60 @@
-import { getUserFromCookies } from '@/core/cookie.service'
-import { unauthorized } from 'next/navigation'
-import { NextRequest } from 'next/server'
+import { getToken } from '@/core/cookie.service'
+import axios from 'axios'
 
 let lastUrl: string = ''
-export async function PATCH(request: NextRequest) {
-  lastUrl = `http://localhost:3001/admin/overlay?auth=${new Date().getTime()}`
-  return new Response(lastUrl, {
-    status: 200,
-    headers: {
-      'Content-Type': 'text/plain',
-    },
-  })
+export async function POST() {
+  try {
+    const token = await getToken()
+
+    if (!token) {
+      return Response.json({ error: 'Não autorizado' }, { status: 401 })
+    }
+
+    const data = await axios.post(
+      `${process.env.API_BASEURL}/admin/live/overlay-key`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    lastUrl = `${process.env.API_BASEURL}?key=${data.data.key}`
+    return new Response(lastUrl, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    })
+  } catch (error) {
+    console.log(error)
+    return Response.json({ error: 'Não autorizado' }, { status: 401 })
+  }
 }
 export async function GET() {
   try {
-    const user = await getUserFromCookies()
-    if (user.role !== 'ADMIN') {
-      unauthorized()
+    const token = await getToken()
+
+    if (!token) {
+      return Response.json({ error: 'Não autorizado' }, { status: 401 })
     }
-    if (!lastUrl)
-      lastUrl = `http://localhost:3001/admin/overlay?auth=${new Date().getTime()}`
-    await getFakeList() //getClientPaymentStatus()
+
+    const data = await axios.get(
+      `${process.env.API_BASEURL}/admin/live/overlay-key`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+    lastUrl = `${process.env.API_BASEURL}?key=${data.data.key}`
 
     return new Response(lastUrl, {
       headers: { 'Content-Type': 'text/plan' },
       status: 200,
     })
   } catch {
-    unauthorized()
+    return Response.json({ error: 'Não autorizado' }, { status: 401 })
   }
-}
-
-async function getFakeList() {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-  return 2
 }

@@ -9,6 +9,7 @@ import {
   updateOverlayLink,
 } from '@/core/admin/clientOverlay.service'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 export default function OverlayLinkSection() {
   const queryKey = ['admin.overlay.link']
@@ -24,15 +25,9 @@ export default function OverlayLinkSection() {
   })
 
   const { mutate, isPending: isMutatePending } = useMutation({
-    async onMutate(variables, ctx) {
-      await ctx.client.cancelQueries({ queryKey })
-      const optmisticLink = variables
-      ctx.client.setQueryData(queryKey, (old) => [old, optmisticLink])
-
-      return optmisticLink
-    },
     onSuccess(data, _variables, _onMutateResult, context) {
       context.client.setQueryData(queryKey, (old) => {
+        toast.success('URL atualizada com sucesso')
         return data
       })
     },
