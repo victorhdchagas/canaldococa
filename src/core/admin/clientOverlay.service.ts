@@ -40,7 +40,6 @@ export async function getOverlayImages(): Promise<string[]> {
       credentials: 'include',
     })
     if (response.status < 300) return await response.json()
-    console.log(await response.text())
     throw new Error('OverlayImages Not Found')
   } catch {
     throw new Error('OverlayImages Not Found')
@@ -56,7 +55,6 @@ export async function getOverlayAudios(): Promise<string[]> {
       credentials: 'include',
     })
     if (response.status < 300) return await response.json()
-    console.log(await response.text())
     throw new Error('OverlayImages Not Found')
   } catch {
     throw new Error('OverlayImages Not Found')
@@ -73,7 +71,6 @@ export async function getOverlaySettings(
       credentials: 'include',
     })
     if (response.status < 300) return await response.json()
-    console.log(await response.text())
     throw new Error('SubscribersSettings Not Found')
   } catch {
     throw new Error('SubscribersSettings Not Found')

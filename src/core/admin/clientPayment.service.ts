@@ -27,7 +27,7 @@ export async function getClientPaymentStatus(
   if (data) {
     return {
       ...data,
-      data: data.data.map((d) => ({ ...d, date: new Date(d.date) })),
+      data: data.data.map((d: any) => ({ ...d, date: new Date(d.createdAt) })),
     }
   }
   return null

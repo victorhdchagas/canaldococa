@@ -99,7 +99,7 @@ function UserTable({
               })}
             </TableCell>
             <TableCell>{payment.name}</TableCell>
-            <TableCell>{payment.plan}</TableCell>
+            <TableCell>{payment.plan || 'Free'}</TableCell>
             <TableCell className="text-right">
               <ActionDropdown
                 userId={payment.id}
