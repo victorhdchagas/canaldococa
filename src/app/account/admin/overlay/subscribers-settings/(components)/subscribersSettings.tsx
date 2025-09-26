@@ -28,6 +28,14 @@ import {
 import SelectImagesSettings from './selectImagesSettings'
 import SelectAudioSettings from './selectAudioSettings'
 
+interface SubscriberSettingsProps {
+  duration: number
+  enabled: boolean
+  internalName: string
+  position: string
+  sound: string
+  image: string
+}
 export default function SubscribersSettings() {
   const queryClient = useQueryClient()
   const [duration, setDuration] = useState(0)
@@ -38,7 +46,7 @@ export default function SubscribersSettings() {
         queryKey: ['admin.overlay.settings', 'subscribers'],
         queryFn: () =>
           getOverlaySettings('subscribers-settings').then((ret) => {
-            setDuration(ret.duration / 1000)
+            setDuration(ret.properties.duration / 1000)
             return ret
           }),
       },
@@ -74,16 +82,16 @@ export default function SubscribersSettings() {
       error: imagesError,
     },
   ] = results
-  const [isEnabled, setIsEnabled] = useState(settingsData?.enabled)
+  const [isEnabled, setIsEnabled] = useState(false)
 
   const handleTestClick = useCallback(() => {
-    if (settingsData?.id)
-      testOverlay(settingsData.id)
+    if (settingsData?.internalName)
+      testOverlay(settingsData.internalName)
         .then(() => {
           toast('Teste enviado com sucesso')
         })
         .catch((err) => toast(err.message))
-  }, [settingsData?.id]) // A função só será recriada se settingsData.id mudar
+  }, [settingsData?.internalName]) // A função só será recriada se settingsData.id mudar
 
   const mutation = useMutation({
     mutationFn: updateOverlaySettings,
@@ -92,6 +100,7 @@ export default function SubscribersSettings() {
       queryClient.invalidateQueries({
         queryKey: ['admin.overlay.settings', 'subscribers'],
       })
+      toast.success('Atualização', { description: 'Overlay atualizado' })
     },
     onError: (error) => {
       // Se a mutação falhar, reverta o estado do switch
@@ -102,11 +111,9 @@ export default function SubscribersSettings() {
 
   const handleSwitchChange = useCallback(
     (checked: boolean) => {
-      // 1. Atualize o estado local (mudança otimista na UI)
       setIsEnabled(checked)
 
-      console.log(settingsData)
-      mutation.mutate({ ...settingsData!, enabled: checked })
+      mutation.mutate({ ...settingsData!, enabled: checked ? 'on' : 'off' })
     },
     [settingsData],
   )
@@ -135,15 +142,28 @@ export default function SubscribersSettings() {
     event.preventDefault()
     const data = Object.fromEntries(
       new FormData(event.currentTarget).entries(),
-    ) as unknown as OverlaySubscribersSettings
-    mutation.mutate(data)
+    ) as unknown as any
+    mutation.mutate({
+      internalName: data.internalName,
+      enabled: data.enabled,
+      properties: {
+        duration: data.duration,
+        image: data.image,
+        position: data.position,
+        sound: data.sound,
+      },
+    })
   }
   return (
     <form
       className="gap-4 px-2 container mx-auto w-full md:max-w-5xl flex flex-col"
       onSubmit={onSubmit}
     >
-      <input type="hidden" name="id" value={settingsData.id} />
+      <input
+        type="hidden"
+        name="internalName"
+        defaultValue={settingsData.internalName}
+      />
       <div className="flex flex-row justify-between">
         <div className="flex flex-col gap-2 justify-center items-center">
           <Switch
@@ -170,14 +190,15 @@ export default function SubscribersSettings() {
           className="h-2 bg-gray-500 appearance-none"
           min={1000}
           step={1000}
-          max={5000}
+          max={15000}
           name="duration"
+          defaultValue={duration * 1000}
           onChange={(e) => setDuration(parseInt(e.target.value) / 1000)}
         ></input>
       </div>
 
       <div className="flex flex-col">
-        <Select defaultValue={settingsData.position}>
+        <Select defaultValue={settingsData.properties.position} name="position">
           <SelectTrigger className="w-full md:w-[230px]">
             <SelectValue placeholder="Selecione a posição na tela" />
           </SelectTrigger>
@@ -201,11 +222,11 @@ export default function SubscribersSettings() {
         </Select>
       </div>
       <SelectImagesSettings
-        defaultValue={settingsData.image}
+        defaultValue={settingsData.properties.image}
         datasource={imageUrls}
       />
       <SelectAudioSettings
-        defaultValue={settingsData.sound}
+        defaultValue={settingsData.properties.sound}
         datasource={audioUrls}
       />
       {/* <p>URLs de Áudio: {JSON.stringify(audioUrls)}</p>

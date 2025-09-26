@@ -1,6 +1,30 @@
+// app/account/layout.tsx (não no layout raiz)
+import { RefreshHandler } from '@/components/RefreshHandler'
 import { UserProvider } from '@/contexts/userProvider'
-import React, { PropsWithChildren } from 'react'
+import { validateSession } from '@/lib/auth-server'
+import { redirect } from 'next/navigation'
 
-export default function Layout({ children }: PropsWithChildren) {
+export default async function AccountLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const session = await validateSession()
+
+  // Se não tem nenhum token, redireciona imediatamente
+  if (!session.isValid && !session.needsRefresh) {
+    redirect('/login')
+  }
+
+  // Se precisa refresh, mostra o RefreshHandler uma única vez
+  if (session.needsRefresh) {
+    return (
+      //   <UserProvider>
+      <RefreshHandler />
+      //   </UserProvider>
+    )
+  }
+
+  // Token válido, renderiza o conteúdo
   return <UserProvider>{children}</UserProvider>
 }

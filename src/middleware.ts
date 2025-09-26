@@ -1,57 +1,41 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { jwtVerify, importSPKI } from 'jose'
+import { NextResponse } from 'next/server'
 
-let cachedPublicKey: any | null = null
-
-async function getPublicKey() {
-  if (cachedPublicKey) {
-    return cachedPublicKey
-  }
-  try {
-    const response = await fetch(`${process.env.API_BASEURL}/auth/public-key`)
-    const text = await response.text()
-    const publicKey = await importSPKI(text, 'RS256')
-    cachedPublicKey = publicKey
-    return publicKey
-  } catch (error) {
-    console.error('Failed to fetch or import public key:', error)
-    return null
-  }
-}
-
-export default async function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
+  const refreshToken = request.cookies.get('refreshToken')?.value
+  const path = request.nextUrl.pathname
 
-  if (request.nextUrl.pathname.startsWith('/account')) {
-    const publicKey = await getPublicKey()
-    if (!publicKey) {
-      console.error('Public key not available.')
-      return NextResponse.redirect(new URL('/login', request.url))
-    }
+  // Rotas públicas que não precisam de autenticação
+  const publicRoutes = ['/', '/login', '/api/auth']
+  const isPublicRoute = publicRoutes.some(
+    (route) => path.startsWith(route) || path === '/',
+  )
 
-    if (!token) {
-      return NextResponse.redirect(new URL('/login', request.url))
-    }
+  // Se é rota pública, permitir acesso
+  if (isPublicRoute && !path.startsWith('/account')) {
+    return NextResponse.next()
+  }
 
-    try {
-      // Verifica o token usando a chave pública
-      const payload = await jwtVerify(token, publicKey, {
-        algorithms: ['RS256'],
-      })
-      // Se a verificação for bem-sucedida, continua a requisição
-      return NextResponse.next()
-    } catch (error) {
-      console.error('JWT verification failed:', error)
-      // Se a verificação falhar, redireciona para o login
-      return NextResponse.redirect(new URL('/login', request.url))
+  // Rotas protegidas - precisa ter pelo menos refresh token
+  if (path.startsWith('/account')) {
+    if (!token && !refreshToken) {
+      const loginUrl = new URL('/login', request.url)
+      loginUrl.searchParams.set('redirect_to', request.nextUrl.pathname)
+      return NextResponse.redirect(loginUrl)
     }
   }
 
-  // Continua para outras rotas não protegidas
+  // Se tem token válido e está tentando acessar login, redireciona
+  if (token && path.startsWith('/login')) {
+    return NextResponse.redirect(new URL('/account', request.url))
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/account/:path*'],
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+  ],
 }

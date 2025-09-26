@@ -1,18 +1,29 @@
+import { getAllOverlays, updateOverlay } from '@/core/admin/overlay.service'
 import { getUserFromCookies } from '@/core/cookie.service'
-import { unauthorized } from 'next/navigation'
+import { revalidateTag } from 'next/cache'
 import { NextRequest } from 'next/server'
 
 export async function PATCH(request: NextRequest) {
-  const body = request.body
-  return Response.json(body, {
+  const body = await request.json()
+  const response = await updateOverlay(body)
+  if (response.success) revalidateTag('admin/overlays')
+  return Response.json(response, {
     status: 200,
   })
 }
 
+// Removed
 export async function GET(request: NextRequest) {
   try {
     const user = await getUserFromCookies()
-    if (user.role !== 'ADMIN') unauthorized()
+    if (user.role !== 'ADMIN')
+      return new Response('Invalid Role', {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        status: 400,
+      })
+
     const name = new URL(request.url).searchParams.get('name')
     if (!name)
       return new Response('Invalid name', {
@@ -22,23 +33,18 @@ export async function GET(request: NextRequest) {
         status: 400,
       })
 
-    const data = await getFakeSettings(name)
+    const overlays = await getAllOverlays()
+    const subscribersAlert = overlays.find(
+      (item: any) => item.internalName === 'subscribers-settings',
+    )
 
-    return Response.json(data)
+    return Response.json(subscribersAlert)
   } catch {
-    unauthorized()
-  }
-}
-
-async function getFakeSettings(name: string) {
-  return {
-    id: name,
-    position: 'top-left',
-    duration: 2000,
-    image:
-      'https://placehold.co/256x126/yellow/white?font=roboto&text=Bem+vindo',
-    sound: 'https://www.myinstants.com/media/sounds/drama-alert-intro.mp3',
-    enabled: Math.random() >= 0.5,
-    updatedAt: new Date(),
+    return new Response('unknown error on settings', {
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      status: 400,
+    })
   }
 }

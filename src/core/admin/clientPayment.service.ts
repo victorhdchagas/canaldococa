@@ -1,4 +1,5 @@
 'use client'
+import { authFetch } from '@/lib/auth-fetch'
 import { Pagination } from '@/types/pagination'
 
 export async function getClientPaymentStatus(
@@ -20,7 +21,7 @@ export async function getClientPaymentStatus(
   }
   if (offset) url.searchParams.set('offset', offset.toString())
 
-  const response = await fetch(url, {
+  const response = await authFetch(url, {
     method: 'get',
   })
   const data = await response.json()

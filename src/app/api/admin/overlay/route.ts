@@ -1,4 +1,5 @@
 import { getToken } from '@/core/cookie.service'
+import { CustomError } from '@/core/exceptions/errors'
 import axios from 'axios'
 
 let lastUrl: string = ''
@@ -27,9 +28,11 @@ export async function POST() {
         'Content-Type': 'text/plain',
       },
     })
-  } catch (error) {
-    console.log(error)
-    return Response.json({ error: 'Não autorizado' }, { status: 401 })
+  } catch (err) {
+    if (err instanceof CustomError)
+      return Response.json(err.message, { status: err.baseStatus })
+    console.error(err)
+    return Response.json(err)
   }
 }
 export async function GET() {
@@ -54,7 +57,10 @@ export async function GET() {
       headers: { 'Content-Type': 'text/plan' },
       status: 200,
     })
-  } catch {
-    return Response.json({ error: 'Não autorizado' }, { status: 401 })
+  } catch (err) {
+    if (err instanceof CustomError)
+      return Response.json(err.message, { status: err.baseStatus })
+    console.error(err)
+    return Response.json(err)
   }
 }

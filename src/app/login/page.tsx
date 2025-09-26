@@ -1,9 +1,6 @@
 'use client'
-import React from 'react'
-import { HugeiconsCoreFreeIcons } from '@hugeicons/react'
-import { useRouter } from 'next/navigation'
-import HeaderSection from '@/components/headerSection/headerSection'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 // Main component for the login page
 const LoginPage = () => {

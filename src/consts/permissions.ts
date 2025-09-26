@@ -1,4 +1,5 @@
-'use client'
+import { UserNotAllowedException } from '@/core/exceptions/errors'
+
 const URL_PATHS = new Map<string, string[][]>()
 
 URL_PATHS.set('ADMIN', [
@@ -7,5 +8,14 @@ URL_PATHS.set('ADMIN', [
   ['Usuarios', '/account/admin/users'],
 ])
 URL_PATHS.set('USER', [['Minha conta', '/account']])
+
+export function validateRole(role: string, path: string) {
+  const adminRoutes = URL_PATHS.get('ADMIN')
+  if (adminRoutes?.some(([_name, route]) => path.startsWith(route))) {
+    if (role !== 'ADMIN') {
+      throw new UserNotAllowedException()
+    }
+  }
+}
 
 export default URL_PATHS

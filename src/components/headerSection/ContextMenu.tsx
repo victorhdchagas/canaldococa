@@ -1,6 +1,7 @@
 'use client' // Use 'use client' para que o componente possa ter estado interativo
 
 import URL_PATHS from '@/consts/permissions'
+import { useLogout } from '@/lib/use-logout'
 import {
   ArrowDown01FreeIcons,
   Logout01FreeIcons,
@@ -18,6 +19,7 @@ export default function ContextMenu({
   role: string
 }) {
   const router = useRouter()
+  const { logout } = useLogout()
   const [isOpen, setIsOpen] = useState(false)
   async function handleLogout() {
     const response = await fetch('/api/auth/logout')
@@ -76,7 +78,7 @@ export default function ContextMenu({
             <button
               onClick={() => {
                 setIsOpen(false)
-                handleLogout()
+                logout()
               }}
               className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-gray-700"
             >

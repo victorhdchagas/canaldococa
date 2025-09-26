@@ -1,6 +1,6 @@
-import { getPaymentStatus } from '@/core/admin/payment.service'
 import { getUserFromCookies } from '@/core/cookie.service'
 import { CustomError } from '@/core/exceptions/errors'
+import { serverApiFetch } from '@/lib/server-api-client'
 
 export async function GET() {
   try {
@@ -8,10 +8,12 @@ export async function GET() {
     if (user.role !== 'ADMIN') {
       return Response.json('Unauthorized', { status: 401 })
     }
-
-    const toReturn = await getPaymentStatus() //getPaymentStatus()
-
-    return Response.json({ pagination: { page: 1 }, data: toReturn })
+    const response = await serverApiFetch('/admin/live/overlays', {
+      method: 'GET',
+      next: { tags: ['admin/overlays'] },
+    })
+    const toReturn = await response.json()
+    return Response.json(toReturn)
   } catch (err) {
     if (err instanceof CustomError)
       return Response.json(err.message, { status: err.baseStatus })

@@ -69,7 +69,7 @@ export default function SelectAudioSettings({
     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
       <Select
         defaultValue={defaultValue}
-        name="audio"
+        name="sound"
         onValueChange={(value) => setSelectedAudioUrl(value)}
       >
         <SelectTrigger className="w-full md:w-full">

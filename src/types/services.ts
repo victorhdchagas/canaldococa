@@ -50,19 +50,15 @@ export interface User {
   createdAt: Date
 }
 
-export interface OverlaySubscribersSettings {
-  id: 'subscribers-settings'
-  position:
-    | 'top-left'
-    | 'top'
-    | 'top-right'
-    | 'bottom-left'
-    | 'bottom'
-    | 'bottom-right'
+export interface OverlaySettings<T> {
+  internalName: string
+  enabled: boolean
+  properties: T
+}
 
+export interface OverlaySubscribersSettings {
+  position: string
   duration: number
   image: string
   sound: string
-  enabled: boolean
-  updatedAt: Date
 }

@@ -1,9 +1,9 @@
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import axios from 'axios'
 import { cookies } from 'next/headers'
-import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-  // Example: handle Discord OAuth callback
   const url = new URL(req.url)
   const code = url.searchParams.get('code')
   if (!code) {
@@ -12,22 +12,63 @@ export async function GET(req: NextRequest) {
       { status: 400 },
     )
   }
+
+  const userAgent = req.headers.get('user-agent') // e.g., 'localhost:3000' or 'example.com'
+  const forwardFor = req.headers.get('x-forwarded-for')
   try {
     const serverResponse = await axios.get(
-      `http://localhost:3000/auth/discord/callback?code=${code}`,
+      `${process.env.API_BASEURL}/auth/discord/callback?code=${code}`,
       {
-        withCredentials: true,
+        headers: {
+          ...(userAgent ? { 'User-Agent': userAgent } : null),
+          ...(forwardFor ? { 'x-forward-for': forwardFor } : null),
+        },
       },
     )
-    const body = serverResponse.data
-    const cookiestore = await cookies()
-    cookiestore.set('token', body.accessToken)
-    cookiestore.set('discordtoken', body.discordAccessToken)
-    cookiestore.set('discordrefreshtoken', body.discordRefreshToken)
-    cookiestore.set('user', JSON.stringify(body.user))
-    return NextResponse.redirect(new URL('/account', 'http://localhost:3001'))
+
+    const {
+      accessToken,
+      refreshToken,
+      discordAccessToken,
+      discordRefreshToken,
+    } = serverResponse.data
+
+    const redirectUrl = new URL('/account', 'http://localhost:3001')
+    // Crie uma resposta de redirecionamento.
+    const response = NextResponse.redirect(redirectUrl)
+
+    // Defina os cookies no objeto de resposta.
+    response.cookies.set('token', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax', // Use 'lax' para redirecionamento. 'none' é para cross-site.
+      path: '/',
+    })
+    response.cookies.set('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    })
+    response.cookies.set('discordToken', discordAccessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    })
+    response.cookies.set('discordRefreshToken', discordRefreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    })
+
+    return response
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 400 })
+    console.error('Error during Discord callback:', err)
+    return NextResponse.json(
+      { error: 'Authentication failed' },
+      { status: 500 },
+    )
   }
-  //   return NextResponse.json({ message: 'Discord callback received', code })
 }
