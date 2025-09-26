@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       clearResponse.cookies.delete('token')
       clearResponse.cookies.delete('refreshToken')
       clearResponse.cookies.delete('discordToken')
-      clearResponse.cookies.delete('discordRefreshToken')
+      //   clearResponse.cookies.delete('discordRefreshToken')
 
       return clearResponse
     }

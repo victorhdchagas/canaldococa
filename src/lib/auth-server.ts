@@ -31,14 +31,14 @@ export async function validateSession(): Promise<{
       payload,
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
     if (error instanceof RefreshTokenException) {
       return {
         isValid: false,
         needsRefresh: true,
       }
     }
-    console.log('error nao tratado no auth-server', error)
+    console.error('error nao tratado no auth-server', error)
 
     return { isValid: false, needsRefresh: false }
   }
@@ -65,6 +65,6 @@ export async function clearAuthCookies() {
 
   cookieStore.delete('token')
   cookieStore.delete('refreshToken')
-  cookieStore.delete('discordToken')
-  cookieStore.delete('discordRefreshToken')
+  //   cookieStore.delete('discordToken')
+  //   cookieStore.delete('discordRefreshToken')
 }

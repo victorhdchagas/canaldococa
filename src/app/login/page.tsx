@@ -1,18 +1,60 @@
 'use client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 // Main component for the login page
 const LoginPage = () => {
   const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleLogin = () => {
-    const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${
+  const handleLogin = async () => {
+    setIsLoading(true)
+
+    try {
+      // Primeiro tenta renovar o token através da API
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        credentials: 'include', // Para incluir os cookies
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+
+        if (data.success) {
+          // Token renovado com sucesso, redireciona para onde precisar
+          router.push(data.redirectUrl || '/dashboard') // ou onde você quiser redirecionar após login
+          return
+        }
+      }
+
+      // Se chegou até aqui, a renovação falhou
+      // Pega a URL de autorização da resposta da API ou constrói uma nova
+      const loginData = await response.json()
+      const discordAuthUrl = loginData.authUrl || constructDiscordAuthUrl()
+
+      // Redireciona para o OAuth do Discord
+      window.location.href = discordAuthUrl
+    } catch (error) {
+      console.error('Erro ao tentar fazer login:', error)
+
+      // Em caso de erro, vai direto para o OAuth do Discord
+      const discordAuthUrl = constructDiscordAuthUrl()
+      window.location.href = discordAuthUrl
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const constructDiscordAuthUrl = () => {
+    return `https://discord.com/api/oauth2/authorize?client_id=${
       process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID
     }&redirect_uri=${encodeURIComponent(
       process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI || '',
     )}&response_type=code&scope=identify%20email`
-    router.push(discordAuthUrl)
   }
 
   return (
@@ -54,28 +96,55 @@ const LoginPage = () => {
 
           {/* Discord login button */}
           <button
-            onClick={() => {
-              handleLogin()
-            }}
-            className="w-full flex items-center justify-center p-3 rounded-md bg-[#5865F2] text-white font-semibold transition-transform transform hover:scale-105 hover:bg-[#4E5AE2] focus:ring-4 focus:ring-[#5865F2]/50 focus:outline-none"
+            onClick={handleLogin}
+            disabled={isLoading}
+            className="w-full flex items-center justify-center p-3 rounded-md bg-[#5865F2] text-white font-semibold transition-transform transform hover:scale-105 hover:bg-[#4E5AE2] focus:ring-4 focus:ring-[#5865F2]/50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 mr-2"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M19.789 2.5a2.545 2.545 0 00-2.31 1.258 19.336 19.336 0 00-6.19 2.373A19.462 19.462 0 005.152 4.093a2.534 2.534 0 00-2.35 1.26A2.5 2.5 0 002.5 7.5c0 .35.158.683.44.9.468.358.977.674 1.48.972a.084.084 0 00.086 0c.2-.12.4-.24.6-.35a.144.144 0 00.038-.03c.532-.308 1.054-.627 1.574-.954A15.93 15.93 0 0112 5.253a15.95 15.95 0 014.734 2.973c.52.327 1.042.646 1.574.954a.144.144 0 00.038.03c.2.11.4.23.6.35a.084.084 0 00.086 0c.503-.298 1.012-.614 1.48-.972a.998.998 0 00.44-.9A2.5 2.5 0 0019.79 2.5zM12 7.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" />
-              <path
-                fill="currentColor"
-                d="M12 10a2.5 2.5 0 100 5 2.5 2.5 0 000-5zm0 2.5a.833.833 0 110 1.666.833.833 0 010-1.666z"
-              />
-              <path
-                fill="currentColor"
-                d="M22.5 7.5a1.25 1.25 0 01-1.25 1.25h-1a.5.5 0 000 1H21.5a1.25 1.25 0 011.25 1.25v2.5a1.25 1.25 0 01-1.25 1.25h-1a.5.5 0 000 1H21.5a1.25 1.25 0 011.25 1.25v2.5a1.25 1.25 0 01-1.25 1.25H2.5a1.25 1.25 0 01-1.25-1.25v-2.5a1.25 1.25 0 011.25-1.25H3.5a.5.5 0 000-1H2.5a1.25 1.25 0 01-1.25-1.25v-2.5A1.25 1.25 0 012.5 7.5H3.5a.5.5 0 000-1H2.5a1.25 1.25 0 011.25-1.25h17.5a1.25 1.25 0 011.25 1.25V7.5zM2.5 7.5H22.5"
-              />
-            </svg>
-            Entrar com Discord
+            {isLoading ? (
+              <>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Entrando...
+              </>
+            ) : (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M19.789 2.5a2.545 2.545 0 00-2.31 1.258 19.336 19.336 0 00-6.19 2.373A19.462 19.462 0 005.152 4.093a2.534 2.534 0 00-2.35 1.26A2.5 2.5 0 002.5 7.5c0 .35.158.683.44.9.468.358.977.674 1.48.972a.084.084 0 00.086 0c.2-.12.4-.24.6-.35a.144.144 0 00.038-.03c.532-.308 1.054-.627 1.574-.954A15.93 15.93 0 0112 5.253a15.95 15.95 0 014.734 2.973c.52.327 1.042.646 1.574.954a.144.144 0 00.038.03c.2.11.4.23.6.35a.084.084 0 00.086 0c.503-.298 1.012-.614 1.48-.972a.998.998 0 00.44-.9A2.5 2.5 0 0019.79 2.5zM12 7.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5z" />
+                  <path
+                    fill="currentColor"
+                    d="M12 10a2.5 2.5 0 100 5 2.5 2.5 0 000-5zm0 2.5a.833.833 0 110 1.666.833.833 0 010-1.666z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M22.5 7.5a1.25 1.25 0 01-1.25 1.25h-1a.5.5 0 000 1H21.5a1.25 1.25 0 011.25 1.25v2.5a1.25 1.25 0 01-1.25 1.25h-1a.5.5 0 000 1H21.5a1.25 1.25 0 011.25 1.25v2.5a1.25 1.25 0 01-1.25 1.25H2.5a1.25 1.25 0 01-1.25-1.25v-2.5a1.25 1.25 0 011.25-1.25H3.5a.5.5 0 000-1H2.5a1.25 1.25 0 01-1.25-1.25v-2.5A1.25 1.25 0 012.5 7.5H3.5a.5.5 0 000-1H2.5a1.25 1.25 0 011.25-1.25h17.5a1.25 1.25 0 011.25 1.25V7.5zM2.5 7.5H22.5"
+                  />
+                </svg>
+                Entrar com Discord
+              </>
+            )}
           </button>
           <Link href="/">Voltar</Link>
         </div>

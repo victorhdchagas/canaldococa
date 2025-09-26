@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     const {
       accessToken,
       refreshToken,
-      discordAccessToken,
+      //   discordAccessToken,
       discordRefreshToken,
     } = serverResponse.data
 
@@ -50,12 +50,12 @@ export async function GET(req: NextRequest) {
       sameSite: 'lax',
       path: '/',
     })
-    response.cookies.set('discordToken', discordAccessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-    })
+    // response.cookies.set('discordToken', discordAccessToken, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   sameSite: 'lax',
+    //   path: '/',
+    // })
     response.cookies.set('discordRefreshToken', discordRefreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

@@ -8,8 +8,8 @@ export async function POST() {
   const cookiesToClear = [
     'token',
     'refreshToken',
-    'discordToken',
-    'discordRefreshToken',
+    // 'discordToken',
+    // 'discordRefreshToken',
   ]
 
   cookiesToClear.forEach((cookieName) => {
@@ -24,7 +24,7 @@ export function clearAuthCookies(response: NextResponse) {
   const cookiesToClear = [
     'token',
     'refreshToken',
-    'discordToken',
+    // 'discordToken',
     'discordRefreshToken',
   ]
 

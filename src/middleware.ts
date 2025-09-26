@@ -14,6 +14,10 @@ export default function middleware(request: NextRequest) {
 
   // Se é rota pública, permitir acesso
   if (isPublicRoute && !path.startsWith('/account')) {
+    if (token && path.startsWith('/login')) {
+      return NextResponse.redirect(new URL('/account', request.url))
+    }
+
     return NextResponse.next()
   }
 
@@ -27,10 +31,6 @@ export default function middleware(request: NextRequest) {
   }
 
   // Se tem token válido e está tentando acessar login, redireciona
-  if (token && path.startsWith('/login')) {
-    return NextResponse.redirect(new URL('/account', request.url))
-  }
-
   return NextResponse.next()
 }
 
