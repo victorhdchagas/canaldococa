@@ -1,7 +1,7 @@
 export async function GET() {
   const channelId = process.env.YOUTUBE_CHANNEL_ID! //'UCIZuoDtcWbJgXwT9p41s2lg' //UCi2Q2vgSu_f6YaH3WbBQxTg xoda
   const isLive = await checkIfYouTubeChannelIsLive(channelId)
-  if (!isLive) return Response.json(null, { status: 400 })
+  if (!isLive) return Response.json(null, { status: 404 })
   return Response.json({ isLive })
 }
 
