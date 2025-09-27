@@ -8,7 +8,7 @@ export default function FooterSection({
   socialNetworks: SocialMedia[]
 }) {
   return (
-    <div className="bg-stone-900 flex flex-col w-full h-auto py-4">
+    <div className="bg-stone-900 flex flex-col justify-center items-center w-full  py-4 ">
       <div className="flex container flex-row justify-center align-center gap-4">
         <YoutubeIcon />
         <YoutubeIcon />

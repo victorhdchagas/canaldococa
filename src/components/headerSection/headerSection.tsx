@@ -17,11 +17,9 @@ export default function HeaderSection() {
             className="border-2 rounded-xl w-[6rem] h-[3.20rem] object-cover bg-red-950"
           />
         </Link>
+        <span className="ml-2 hidden md:block text-nowrap">Canal do Coca</span>
       </div>
-      <span className="justify-start gap-1 text-yellow-500 col-span-2 text-2xl text-center ">
-        Canal do Coca
-      </span>
-      <div className="flex justify-end col-span-1 items-end">
+      <div className="flex justify-end col-span-3 items-end">
         {isLoading && (
           <div className="h-12 w-12  relative bg-red-900 rounded-full">
             <div className="h-12 w-12 top-0 left-0 animate-ping bg-red-950 -z-10 rounded-full"></div>

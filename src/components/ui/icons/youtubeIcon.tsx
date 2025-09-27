@@ -7,6 +7,7 @@ export default function YoutubeIcon() {
       icon={YoutubeFreeIcons}
       size={24}
       color="currentColor"
+      className="text-yellow-600"
       strokeWidth={1.5}
     />
   )
