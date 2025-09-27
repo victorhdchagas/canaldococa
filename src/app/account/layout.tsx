@@ -1,6 +1,5 @@
 // app/account/layout.tsx (não no layout raiz)
 import { RefreshHandler } from '@/components/RefreshHandler'
-import { UserProvider } from '@/contexts/userProvider'
 import { validateSession } from '@/lib/auth-server'
 import { redirect } from 'next/navigation'
 
@@ -26,5 +25,5 @@ export default async function AccountLayout({
   }
 
   // Token válido, renderiza o conteúdo
-  return <UserProvider>{children}</UserProvider>
+  return <>{children}</>
 }

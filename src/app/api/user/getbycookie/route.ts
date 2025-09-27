@@ -1,18 +1,12 @@
-import {
-  getPublicKey,
-  getUserFromCookies,
-  isTokenValid,
-} from '@/core/cookie.service'
-import { InvalidTokenException } from '@/core/exceptions/errors'
+import { isTokenValid } from '@/core/cookie.service'
 import { cookies } from 'next/headers'
 
 export async function GET() {
   const cookieStore = await cookies()
-  const token = cookieStore.get('token')!.value
-  const pk = await getPublicKey()
-  if (!pk || !token) throw new Error('User unauthorized')
+  const tokenCookie = cookieStore.get('token')
+  if (!tokenCookie || !tokenCookie.value) return Response.json({ user: null })
   try {
-    const user = await isTokenValid(token)
+    const user = await isTokenValid(tokenCookie.value)
     if (!user) return Response.json({ user: null })
 
     return Response.json({

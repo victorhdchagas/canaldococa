@@ -1,11 +1,13 @@
 'use client'
+import { UserContext } from '@/contexts/userContext'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
 // Main component for the login page
 const LoginPage = () => {
   const router = useRouter()
+  const ctx = useContext(UserContext)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleLogin = async () => {
@@ -25,8 +27,8 @@ const LoginPage = () => {
         const data = await response.json()
 
         if (data.success) {
-          // Token renovado com sucesso, redireciona para onde precisar
-          router.push(data.redirectUrl || '/dashboard') // ou onde você quiser redirecionar após login
+          ctx.refresh()
+          router.push(data.redirectUrl || '/account')
           return
         }
       }
