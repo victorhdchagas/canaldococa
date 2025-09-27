@@ -7,7 +7,9 @@ export default function BoxLink({
 }: PropsWithChildren<{ href: string | UrlObject }>) {
   return (
     <Link
-      className="w-full text-lg rounded-sm border bg-gray-950 border-yellow-600 text-yellow-500 flex justify-center items-center font-bold p-4 hover:scale-105 shadow-md hover:shadow-lg shadow-amber-950 transition-all hover:-rotate-2 hover:text-2xl"
+      className="w-full text-lg rounded-sm border bg-gradient-to-b from-gray-950 to-gray-900 border-yellow-800 text-yellow-500 
+      flex justify-center items-center font-bold p-4 hover:scale-105 shadow-md hover:shadow-lg shadow-amber-950 
+      transition-all hover:-rotate-2 hover:text-2xl"
       href={href}
     >
       {children}

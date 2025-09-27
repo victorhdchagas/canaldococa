@@ -10,7 +10,7 @@ export default function BlurredElement({
 }: PropsWithChildren<{ startVisible?: false }>) {
   const [blur, setBlur] = useState<boolean>(!startVisible)
   return (
-    <div className="flex flex-row justify-between w-full px-2 gap-2">
+    <div className="flex flex-row justify-between w-full px-2 gap-2 rounded-sm bg-gray-800 border border-gray-600 p-1">
       <div className={twMerge('flex-10', blur ? 'blur-sm' : '')}>
         {children}
       </div>

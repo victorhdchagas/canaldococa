@@ -57,7 +57,9 @@ export default function OverlayLinkSection() {
 
   return (
     <form
-      className="flex flex-col  gap-4 px-2 container mx-auto"
+      className="flex flex-col  container md:max-w-[650px] border border-gray-800
+       rounded-md p-4 shadow-lg shadow-amber-900/20 border-t-gray-700
+       bg-gradient-to-b from-gray-950 to-gray-800"
       onSubmit={(e) => {
         e.preventDefault()
         // const link = new FormData(e.currentTarget).get('overlaylink')
@@ -65,17 +67,17 @@ export default function OverlayLinkSection() {
       }}
     >
       <Subtitle>Link do OBS</Subtitle>
-      <span className="text-gray-400 italic ">
+      <span className="text-gray-400 text-sm">
         Copie e cole o link abaixo no seu OBS
       </span>
-      <div className="flex flex-col justify-between items-start gap-2">
+      <div className="flex flex-col justify-between items-start gap-6 mt-2">
         <BlurredElement>
           <input
             type="text"
             value={overlayLink}
             name="overlaylink"
             readOnly
-            className="w-full px-2 rounded-sm"
+            className="w-full px-2 rounded-sm bg-transparent outline-none  text-white p-1"
           />
         </BlurredElement>
         <SubmitButton disabled={isMutatePending}>
