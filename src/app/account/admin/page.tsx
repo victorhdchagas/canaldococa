@@ -1,8 +1,9 @@
 import HeaderSection from '@/components/headerSection/headerSection'
 import PageContainer from '@/components/Page/PageContainer'
 import Title from '@/components/text/title'
-import ConnectionsSection from './(components)/ConnectionsSection'
+import ConnectionsSection from './(components)/connections/ConnectionsSection'
 import MainDivisor from '@/components/divisors/maindivisor'
+import WelcomeUser from './(components)/WelcomeUsers'
 
 export default async function UserPage({
   searchParams,
@@ -16,8 +17,9 @@ export default async function UserPage({
       <HeaderSection />
       <Title>Dashboard</Title>
       <MainDivisor />
-      <section className="container flex flex-col justify-start items-start w-full gap-4 px-0.5">
+      <section className="container flex flex-col md:flex-row justify-start items-start w-full gap-4 px-0.5">
         <ConnectionsSection />
+        <WelcomeUser />
       </section>
     </PageContainer>
   )
