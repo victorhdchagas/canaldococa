@@ -9,7 +9,7 @@ export default function LiveSection({ channelId }: { channelId: string }) {
   useEffect(() => {
     async function checkAvaiability() {
       const { status } = await fetch('/api/islive', { cache: 'no-cache' })
-      setIsLive(status < 400)
+      setIsLive(status != 404)
     }
     checkAvaiability()
     return () => {

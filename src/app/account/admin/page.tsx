@@ -1,8 +1,6 @@
 import HeaderSection from '@/components/headerSection/headerSection'
-import PaymentUserList from './(components)/userList'
-import SearchUserFilter from './(components)/searchUserFilter'
-import Title from '@/components/text/title'
 import PageContainer from '@/components/Page/PageContainer'
+import Title from '@/components/text/title'
 
 export default async function UserPage({
   searchParams,
@@ -14,11 +12,8 @@ export default async function UserPage({
   return (
     <PageContainer>
       <HeaderSection />
-      <Title>Lista de apoiadores</Title>
-      <SearchUserFilter />
-      <section className="container mx-auto">
-        <PaymentUserList query={query?.query} />
-      </section>
+      <Title>Dashboard</Title>
+      <section className="container mx-auto"></section>
     </PageContainer>
   )
 }
