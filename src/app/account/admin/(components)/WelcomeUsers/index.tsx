@@ -1,11 +1,10 @@
 'use client'
 import Subtitle from '@/components/text/subtitle'
-import {
-  BluetoothNotConnectedFreeIcons,
-  FileNotFoundFreeIcons,
-} from '@hugeicons/core-free-icons'
+import { SocketEvents } from '@/consts/socket-enums'
+import { useWebSocket, WebSocketMessage } from '@/lib/useWebsocket'
+import { FileNotFoundFreeIcons } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 interface EventItem {
@@ -17,66 +16,41 @@ interface EventItem {
   type: 'joined-platform' | 'become-member'
 }
 
-const initialData: EventItem[] = [
-  //   {
-  //     id: 1,
-  //     name: 'Chris',
-  //     date: new Date().toISOString(),
-  //     avatar: `https://testingbot.com/free-online-tools/random-avatar/200?u=${Math.random()}`,
-  //     message: 'Se cadastrou na plataforma!',
-  //     type: 'joined-platform',
-  //   },
-  //   {
-  //     id: 12,
-  //     name: 'Leon',
-  //     date: new Date().toISOString(),
-  //     avatar: `https://testingbot.com/free-online-tools/random-avatar/200?u=${Math.random()}`,
-  //     message: 'Se tornou membro Prata!',
-  //     type: 'become-member',
-  //   },
-  //   {
-  //     id: 16,
-  //     name: 'Wesker',
-  //     date: new Date().toISOString(),
-  //     avatar: `https://testingbot.com/free-online-tools/random-avatar/200?u=${Math.random()}`,
-  //     message: 'Se tornou membro Ouro!',
-  //     type: 'become-member',
-  //   },
-]
+const initialData: EventItem[] = []
 
 type FilterType = 'all' | 'users' | 'members'
 
-export default function WelcomeUser() {
+export default function WelcomeUser({
+  token,
+}: {
+  token: string | undefined | null
+}) {
   const [events, setEvents] = useState<EventItem[]>(initialData)
   const [filter, setFilter] = useState<FilterType>('all')
 
-  useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080/realtime-events')
-
-    ws.onopen = () => {
-      console.log('Conexão WebSocket estabelecida.')
-    }
-
-    ws.onmessage = (event) => {
+  const onMessageReceived = useCallback(
+    (event: WebSocketMessage<EventItem>) => {
       try {
-        // Assume que a mensagem é uma string JSON contendo um EventItem
-        const newEvent: EventItem = JSON.parse(event.data)
+        // Garantindo que a data é um objeto JSON válido (como você já faz)
+        const newEvent: EventItem = event.payload
 
         setEvents((prevEvents) => [newEvent, ...prevEvents].slice(0, 50))
       } catch (error) {
         console.error('Erro ao processar mensagem do WebSocket:', error)
       }
-    }
+    },
+    [],
+  )
 
-    ws.onerror = (error) => {
-      console.error('Erro no WebSocket:', error)
-    }
+  const { isConnected, error, sendMessage } = useWebSocket<EventItem>(
+    SocketEvents.ADMIN_EVENTS,
+    onMessageReceived,
+    token,
+  )
 
-    return () => {
-      ws.close()
-      console.log('Conexão WebSocket fechada.')
-    }
-  }, [])
+  useEffect(() => {
+    console.log(isConnected, error)
+  }, [isConnected, error, sendMessage])
 
   const filteredEvents = useMemo(() => {
     switch (filter) {

@@ -4,6 +4,7 @@ import Title from '@/components/text/title'
 import ConnectionsSection from './(components)/connections/ConnectionsSection'
 import MainDivisor from '@/components/divisors/maindivisor'
 import WelcomeUser from './(components)/WelcomeUsers'
+import { getToken } from '@/core/cookie.service'
 
 export default async function UserPage({
   searchParams,
@@ -11,6 +12,7 @@ export default async function UserPage({
   searchParams?: Promise<{ query?: string }>
 }) {
   const query = await searchParams
+  const token = await getToken()
 
   return (
     <PageContainer>
@@ -19,7 +21,7 @@ export default async function UserPage({
       <MainDivisor />
       <section className="container flex flex-col md:flex-row justify-start items-start w-full gap-4 px-0.5">
         <ConnectionsSection />
-        <WelcomeUser />
+        <WelcomeUser token={token} />
       </section>
     </PageContainer>
   )
