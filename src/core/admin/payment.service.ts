@@ -1,3 +1,4 @@
+import { serverEnv } from '@/env/server'
 import { Pagination } from '@/types/pagination'
 import { cookies } from 'next/headers'
 
@@ -6,7 +7,7 @@ export async function getPaymentStatus(
   offset?: number,
 ): Promise<(Pagination & { data: any }) | null> {
   const cookieStore = await cookies()
-  const url = new URL(`${process.env.API_BASEURL!}/admin/payments`)
+  const url = new URL(`${serverEnv.API_URL!}/admin/payments`)
   if (page) {
     url.searchParams.set('page', page.toString())
   }

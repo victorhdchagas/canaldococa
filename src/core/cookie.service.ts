@@ -9,6 +9,7 @@ import {
 } from './exceptions/errors'
 import { TokenPayload } from '@/types/auth'
 import { JWTExpired } from 'jose/errors'
+import { serverEnv } from '@/env/server'
 
 let cachedPublicKey: CryptoKey | null = null
 export async function getRefreshToken(
@@ -16,7 +17,7 @@ export async function getRefreshToken(
   userAgent: string | null,
   forwardedFor: string | null,
 ) {
-  const response = await fetch(`${process.env.API_BASEURL}/auth/refresh`, {
+  const response = await fetch(`${serverEnv.API_URL}/auth/refresh`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ export async function getPublicKey(): Promise<CryptoKey> {
   }
 
   try {
-    const response = await fetch(`${process.env.API_BASEURL}/auth/public-key`, {
+    const response = await fetch(`${serverEnv.API_URL}/auth/public-key`, {
       cache: 'no-store',
     })
 

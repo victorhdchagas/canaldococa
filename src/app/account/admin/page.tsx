@@ -5,6 +5,7 @@ import ConnectionsSection from './(components)/connections/ConnectionsSection'
 import MainDivisor from '@/components/divisors/maindivisor'
 import WelcomeUser from './(components)/WelcomeUsers'
 import { getToken } from '@/core/cookie.service'
+import { Suspense } from 'react'
 
 export default async function UserPage({
   searchParams,
@@ -20,7 +21,9 @@ export default async function UserPage({
       <Title>Dashboard</Title>
       <MainDivisor />
       <section className="container flex flex-col md:flex-row justify-start items-start w-full gap-4 px-0.5">
-        <ConnectionsSection />
+        <Suspense fallback={<>Loading</>}>
+          <ConnectionsSection />
+        </Suspense>
         <WelcomeUser token={token} />
       </section>
     </PageContainer>

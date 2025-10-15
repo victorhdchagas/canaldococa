@@ -1,3 +1,4 @@
+import { serverEnv } from '@/env/server'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest) {
     const userAgent = request.headers.get('user-agent')
     const forwardFor = request.headers.get('x-forwarded-for')
 
-    const response = await fetch(`${process.env.API_BASEURL}/auth/refresh`, {
+    const response = await fetch(`${serverEnv.API_URL}/auth/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

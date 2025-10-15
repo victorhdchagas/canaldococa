@@ -1,4 +1,5 @@
 // lib/server-api-client.ts
+import { serverEnv } from '@/env/server'
 import { cookies, headers } from 'next/headers'
 
 interface ServerApiOptions extends RequestInit {
@@ -20,7 +21,7 @@ export async function serverApiFetch(
     throw new Error('No access token available')
   }
 
-  const url = new URL(endpoint, process.env.API_BASEURL!)
+  const url = new URL(endpoint, serverEnv.API_URL)
 
   // Primeira tentativa com token atual
   let response = await fetch(url, {
@@ -66,7 +67,7 @@ async function refreshTokensServerSide(refreshToken: string): Promise<{
     const userAgent = headersList.get('user-agent')
     const forwardFor = headersList.get('x-forwarded-for')
 
-    const response = await fetch(`${process.env.API_BASEURL}/auth/refresh`, {
+    const response = await fetch(`${serverEnv.API_URL}/auth/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

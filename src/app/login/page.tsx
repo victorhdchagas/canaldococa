@@ -1,5 +1,6 @@
 'use client'
 import { UserContext } from '@/contexts/userContext'
+import { clientEnv } from '@/env/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'
@@ -14,10 +15,9 @@ const LoginPage = () => {
     setIsLoading(true)
 
     try {
-      // Primeiro tenta renovar o token através da API
       const response = await fetch('/api/login', {
         method: 'POST',
-        credentials: 'include', // Para incluir os cookies
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -36,27 +36,15 @@ const LoginPage = () => {
       // Se chegou até aqui, a renovação falhou
       // Pega a URL de autorização da resposta da API ou constrói uma nova
       const loginData = await response.json()
-      const discordAuthUrl = loginData.authUrl || constructDiscordAuthUrl()
+      const discordAuthUrl = loginData.authUrl
 
       // Redireciona para o OAuth do Discord
       window.location.href = discordAuthUrl
     } catch (error) {
       console.error('Erro ao tentar fazer login:', error)
-
-      // Em caso de erro, vai direto para o OAuth do Discord
-      const discordAuthUrl = constructDiscordAuthUrl()
-      window.location.href = discordAuthUrl
     } finally {
       setIsLoading(false)
     }
-  }
-
-  const constructDiscordAuthUrl = () => {
-    return `https://discord.com/api/oauth2/authorize?client_id=${
-      process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID
-    }&redirect_uri=${encodeURIComponent(
-      process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI || '',
-    )}&response_type=code&scope=identify%20email`
   }
 
   return (

@@ -2,7 +2,12 @@
 import Subtitle from '@/components/text/subtitle'
 import { SocketEvents } from '@/consts/socket-enums'
 import { useWebSocket, WebSocketMessage } from '@/lib/useWebsocket'
-import { FileNotFoundFreeIcons } from '@hugeicons/core-free-icons'
+import {
+  FileNotFoundFreeIcons,
+  UserAccountFreeIcons,
+  UserAdd02FreeIcons,
+  UserSwitchFreeIcons,
+} from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -80,21 +85,23 @@ export default function WelcomeUser({
 
   return (
     <div
-      className=" border-yellow-700 bg-gradient-to-b from-gray-800 to-gray-950 
-          select-none
-        flex flex-col justify-start max-w-md w-full rounded-md px-2 pb-6"
+      className="bg-gradient-to-b from-gray-900 to-gray-950
+      select-none shadow-l p-4
+    flex flex-col justify-start max-w-md w-full rounded-t-md "
     >
-      <Subtitle>Eventos recentes</Subtitle>
+      <h3 className="text-gray-300 text-lg font-semibold text-shadow-sm  ">
+        Eventos recentes
+      </h3>
       <p className="text-sm text-gray-500 px-2 pb-4">
         Exibe novos usuários e novos apoiadores da plataforma
       </p>
-      <div className="flex flex-row justify-evenly px-2 ">
+      <div className="flex flex-row justify-start gap-2 px-2 ">
         {/* Botão Todos */}
         <span
           onClick={() => setFilter('all')}
           className={twMerge(
-            'transition-all text-xs text-gray-500 border border-yellow-700 cursor-pointer py-2 px-1 rounded-md ',
-            filter === 'all' && 'bg-yellow-700 text-white ',
+            'transition-all text-xs text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-2 px-1 rounded-md w-16 text-center ',
+            filter === 'all' && 'from-gray-700 text-gray-300 font-semibold ',
           )}
         >
           Todos
@@ -103,8 +110,8 @@ export default function WelcomeUser({
         <span
           onClick={() => setFilter('users')}
           className={twMerge(
-            'transition-all text-xs text-gray-500 border border-yellow-700 cursor-pointer py-2 px-1 rounded-md ',
-            filter === 'users' && 'bg-yellow-700 text-white ',
+            'transition-all text-xs text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-2 px-1 rounded-md w-16 text-center ',
+            filter === 'users' && 'from-gray-700 text-gray-300 font-semibold ',
           )}
         >
           Usuarios
@@ -113,8 +120,9 @@ export default function WelcomeUser({
         <span
           onClick={() => setFilter('members')}
           className={twMerge(
-            'transition-all text-xs text-gray-500 border border-yellow-700 cursor-pointer py-2 px-1 rounded-md ',
-            filter === 'members' && 'bg-yellow-700 text-white ',
+            'transition-all text-xs text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-2 px-1 rounded-md w-16 text-center ',
+            filter === 'members' &&
+              'from-gray-700 text-gray-300 font-semibold ',
           )}
         >
           Membros
@@ -124,20 +132,38 @@ export default function WelcomeUser({
         {filteredEvents.map((event) => (
           <div
             key={event.id}
-            className="flex items-center gap-3 border-b border-gray-700 pb-2 "
+            className="flex items-center gap-3 border-b border-gray-700 pb-2 
+            shadow-m
+            bg-gray-800
+             rounded-md p-4 w-full "
           >
             <img
               src={event.avatar}
               alt={event.name}
               className="w-10 h-10 rounded-full object-cover"
             />
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-3">
               <span className="text-sm font-medium">{event.name}</span>
               <span className="text-xs text-gray-500">{event.message}</span>
               <span className="text-xs text-gray-500">
                 {/* Formata a data recebida como string */}
                 {formatDate(event.date)}
               </span>
+            </div>
+            <div className="flex-1 flex justify-end ">
+              {event.type === 'joined-platform' ? (
+                <HugeiconsIcon
+                  icon={UserAdd02FreeIcons}
+                  size={24}
+                  className="text-gray-300"
+                />
+              ) : event.type === 'become-member' ? (
+                <HugeiconsIcon
+                  icon={UserSwitchFreeIcons}
+                  size={24}
+                  className="text-gray-300"
+                />
+              ) : null}
             </div>
           </div>
         ))}

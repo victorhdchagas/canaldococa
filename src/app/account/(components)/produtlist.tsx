@@ -3,10 +3,11 @@ import axios from 'axios'
 import React from 'react'
 import ServiceCard from './productcard'
 import { cookies } from 'next/headers'
+import { serverEnv } from '@/env/server'
 
 export default async function ProductList() {
   const [response, cookieStorage] = await Promise.all([
-    axios.get(`${process.env.API_BASEURL}/payments/products`, {
+    axios.get(`${serverEnv.API_URL}/payments/products`, {
       withCredentials: true,
     }),
     cookies(),

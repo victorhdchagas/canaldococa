@@ -1,5 +1,5 @@
 'use client'
-import { WEBSOCKET_URL } from '@/consts/urls'
+import { clientEnv } from '@/env/client'
 import { useState, useEffect, useRef, useCallback } from 'react'
 
 import { io, Socket } from 'socket.io-client'
@@ -34,7 +34,7 @@ export const useWebSocket = <T = unknown>(
   }, [])
 
   useEffect(() => {
-    const url = new URL(WEBSOCKET_URL)
+    const url = new URL(clientEnv.NEXT_PUBLIC_WEBSOCKET_URL)
 
     const socket = io(url.origin, {
       path: url.pathname,

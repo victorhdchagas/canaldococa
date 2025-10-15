@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { serverEnv } from '@/env/server'
+import { clientEnv } from '@/env/client'
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,9 +19,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const userAgent = request.headers.get('user-agent') // e.g., 'localhost:3000' or 'example.com'
+    const userAgent = request.headers.get('user-agent')
     const forwardFor = request.headers.get('x-forwarded-for')
-    const apiendpoint = new URL('auth/refreshDiscord', process.env.API_BASEURL)
+    const apiendpoint = new URL('auth/refreshDiscord', serverEnv.API_URL)
     //RefreshDiscordToken
     const tokenResponse = await fetch(apiendpoint, {
       method: 'POST',
@@ -103,8 +105,8 @@ export async function POST(request: NextRequest) {
 
 function constructDiscordAuthUrl(): string {
   const params = new URLSearchParams({
-    client_id: process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID!,
-    redirect_uri: process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI!,
+    client_id: clientEnv.NEXT_PUBLIC_DISCORD_CLIENT_ID.toString(),
+    redirect_uri: clientEnv.NEXT_PUBLIC_DISCORD_REDIRECT_URI,
     response_type: 'code',
     scope: 'identify email',
   })

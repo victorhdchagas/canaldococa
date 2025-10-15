@@ -1,5 +1,6 @@
 import { getToken } from '@/core/cookie.service'
 import { CustomError } from '@/core/exceptions/errors'
+import { serverEnv } from '@/env/server'
 import axios from 'axios'
 
 let lastUrl: string = ''
@@ -12,7 +13,7 @@ export async function POST() {
     }
 
     const data = await axios.post(
-      `${process.env.API_BASEURL}/admin/live/overlay-key`,
+      `${serverEnv.API_URL}/admin/live/overlay-key`,
       {},
       {
         headers: {
@@ -21,7 +22,7 @@ export async function POST() {
         },
       },
     )
-    lastUrl = `${process.env.API_BASEURL}?key=${data.data.key}`
+    lastUrl = `${serverEnv.API_URL}?key=${data.data.key}`
     return new Response(lastUrl, {
       status: 200,
       headers: {
@@ -44,14 +45,14 @@ export async function GET() {
     }
 
     const data = await axios.get(
-      `${process.env.API_BASEURL}/admin/live/overlay-key`,
+      `${serverEnv.API_URL}/admin/live/overlay-key`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       },
     )
-    lastUrl = `${process.env.API_BASEURL}?key=${data.data.key}`
+    lastUrl = `${serverEnv.API_URL}?key=${data.data.key}`
 
     return new Response(lastUrl, {
       headers: { 'Content-Type': 'text/plan' },

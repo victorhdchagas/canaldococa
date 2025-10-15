@@ -1,6 +1,7 @@
 'use server'
 import { isTokenValid } from '@/core/cookie.service'
 import { RefreshTokenException } from '@/core/exceptions/errors'
+import { serverEnv } from '@/env/server'
 import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
@@ -18,18 +19,15 @@ export async function isValidSession() {
           const headersList = await headers()
           const userAgent = headersList.get('user-agent') // e.g., 'localhost:3000' or 'example.com'
           const forwardFor = headersList.get('x-forwarded-for')
-          const response = await fetch(
-            `${process.env.API_BASEURL}/auth/refresh`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                ...(userAgent ? { 'User-Agent': userAgent } : null),
-                ...(forwardFor ? { 'x-forward-for': forwardFor } : null),
-              },
-              body: JSON.stringify({ refreshToken }),
+          const response = await fetch(`${serverEnv.API_URL}/auth/refresh`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(userAgent ? { 'User-Agent': userAgent } : null),
+              ...(forwardFor ? { 'x-forward-for': forwardFor } : null),
             },
-          )
+            body: JSON.stringify({ refreshToken }),
+          })
 
           if (!response.ok) {
             cookieStore

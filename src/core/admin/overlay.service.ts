@@ -3,9 +3,10 @@ import { OverlaySettings } from '@/types/services'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { getToken } from '../cookie.service'
+import { serverEnv } from '@/env/server'
 
 export async function updateOverlay(overlay: OverlaySettings<any>) {
-  const url = new URL(`${process.env.API_BASEURL!}/admin/live/overlays`)
+  const url = new URL(`${serverEnv.API_URL!}/admin/live/overlays`)
 
   const token = await getToken()
   const response = await fetch(url, {
@@ -74,7 +75,7 @@ export async function getAllOverlaysSimple(): Promise<any> {
     redirect('/login')
   }
 
-  const url = new URL(`${process.env.API_BASEURL!}/admin/live/overlays`)
+  const url = new URL(`${serverEnv.API_URL!}/admin/live/overlays`)
 
   try {
     const response = await fetch(url, {

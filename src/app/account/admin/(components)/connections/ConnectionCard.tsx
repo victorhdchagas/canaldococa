@@ -1,35 +1,36 @@
 'use client'
-import { ArrowUp01FreeIcons } from '@hugeicons/core-free-icons'
+import {
+  ArrowUp01FreeIcons,
+  InformationSquareFreeIcons,
+  Settings02FreeIcons,
+} from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
+import { AnimatePresence, motion, Variants } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
-import { motion, AnimatePresence, Variants } from 'framer-motion'
 interface ConnectionCardProps {
-  error: undefined
-  message: string
   description: string
   effects: string[]
   name: string
-  status: string
+  isConnected: boolean
 }
 export default function ConnectionCard(connection: ConnectionCardProps) {
+  const router = useRouter()
   const [detailsVisible, setDetailsVisible] = React.useState(false)
 
   const ulVariants: Variants = {
-    // Estado inicial (fechado)
     hidden: { height: 0, opacity: 0, marginTop: 0, marginBottom: 0 },
-    // Estado visível (aberto)
     visible: {
-      height: 'auto', // O Framer Motion consegue animar isso de forma suave!
+      height: 'auto',
       opacity: 1,
       marginTop: '0.5rem',
 
       transition: {
-        duration: 0.3, // Duração da animação
+        duration: 0.3,
         ease: 'easeInOut',
       },
     },
-    // Estado de saída
     exit: {
       height: 0,
       opacity: 0,
@@ -41,27 +42,32 @@ export default function ConnectionCard(connection: ConnectionCardProps) {
       },
     },
   }
+  async function onConnect(type: string) {
+    const url = new URL(window.location.origin)
+    url.pathname = `/api/auth/${type.toLowerCase()}/connect`
+    router.push(url.toString())
+  }
 
   const showEffects = detailsVisible && connection.effects.length > 0
   return (
     <div
-      key={connection.name}
-      className="flex flex-col  border-gray-700 
+      className="flex flex-col  
+            shadow-m
             bg-gray-800
-             rounded-md p-4 w-full"
+             rounded-sm p-4 w-full"
     >
       <div className="flex justify-between items-center w-full">
-        <h3 className="text-sm font-medium font-mono select-all">
+        <h3 className="text-sm font-medium font-mono select-all first-letter:uppercase">
           {connection.name}
         </h3>
         <span
           className={`px-2 py-1 text-sm rounded-full font-mono ${
-            connection.status === 'connected'
-              ? 'border-l-0 border-b border-emerald-900 text-gray-200'
-              : 'border-l-0 border-b border-red-900 text-gray-200'
+            connection.isConnected
+              ? 'rounded-full h-4 w-4 bg-emerald-900 text-gray-200'
+              : 'rounded-full h-4 w-4 bg-red-900 text-gray-200'
           }`}
         >
-          {connection.status === 'connected' ? 'Conectado' : 'Desconectado'}
+          {/* {connection.status === 'connected' ? 'Conectado' : 'Desconectado'} */}
         </span>
       </div>
       <p className="text-xs text-gray-400 mt-2 select-all">
@@ -74,7 +80,7 @@ export default function ConnectionCard(connection: ConnectionCardProps) {
             animate="visible"
             exit="exit"
             variants={{ ...ulVariants }}
-            className="list-disc list-inside text-sm text-gray-300 mt-2 transition-all"
+            className="list-disc list-inside text-sm text-gray-300 mt-2 transition-all px-4 py-4 rounded-lg bg-gray-700"
           >
             {connection.effects.map((effect, index) => (
               <li key={index}>{effect}</li>
@@ -98,22 +104,37 @@ export default function ConnectionCard(connection: ConnectionCardProps) {
           />
         </span>
       )}
-      {connection.error && (
-        <p className="text-sm text-red-500 mt-2">Erro: {connection.error}</p>
-      )}
-      {connection.message && (
-        <p className="text-sm text-yellow-500 mt-2">{connection.message}</p>
-      )}
-      <div className="mt-4 items-end flex justify-end w-full">
-        {connection.status === 'connected' ? (
-          <button className="border cursor-pointer transition-all hover:bg-red-900 border-red-800 hover:border-red-700 font-light text-white px-2 py-1 rounded-md text-sm">
-            Desconectar
+
+      <div className="mt-4 grid grid-cols-2">
+        <div></div>
+        <div className="flex justify-end items-center gap-2">
+          <button className="transition-all text-xs hover:shadow-m hover:text-gray-300 hover:from-gray-700 hover:scale-105 text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-1 px-1 rounded-md text-center">
+            <HugeiconsIcon icon={InformationSquareFreeIcons} size={24} />
           </button>
-        ) : (
-          <button className="border cursor-pointer transition-all hover:bg-green-900 border-green-800 hover:border-green-700 font-light text-white px-2 py-1 rounded-md text-sm">
-            Conectar
-          </button>
-        )}
+          {connection.isConnected && (
+            <button
+              onClick={() => {
+                router.push(`/account/admin/connections/${connection.name}`)
+              }}
+              className="transition-all text-xs hover:shadow-m hover:text-gray-300 hover:from-gray-700 hover:scale-105 text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-1 px-1 rounded-md text-center"
+            >
+              <HugeiconsIcon icon={Settings02FreeIcons} size={24} />
+            </button>
+          )}
+          {connection.isConnected && (
+            <button className="transition-all text-xs hover:shadow-m hover:text-gray-300 hover:from-gray-700 hover:scale-105 text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-2 px-1 w-24 rounded-md text-center">
+              Desconectar
+            </button>
+          )}
+          {!connection.isConnected && (
+            <button
+              onClick={() => onConnect(connection.name)}
+              className="transition-all text-xs hover:shadow-m hover:text-gray-300 hover:from-gray-700 hover:scale-105 text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-2 px-1 w-24 rounded-md text-center"
+            >
+              Conectar
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )

@@ -1,14 +1,13 @@
 import React from 'react'
 import Title from '../text/title'
 import Subtitle from '../text/subtitle'
+import { serverEnv } from '@/env/server'
 
 export default async function BecomeSubscriberSection() {
-  const [response] = await Promise.all([
-    fetch(`${process.env.API_BASEURL}/payments/products`, {
-      method: 'GET',
-      credentials: 'include',
-    }),
-  ])
+  const response = await fetch(`${serverEnv.API_URL}/payments/products`, {
+    method: 'GET',
+    credentials: 'include',
+  })
   const data = await response.json()
 
   if (!data || data.length === 0) {

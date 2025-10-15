@@ -1,7 +1,7 @@
+import { serverEnv } from '@/env/server'
+import axios from 'axios'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import axios from 'axios'
-import { cookies } from 'next/headers'
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   const forwardFor = req.headers.get('x-forwarded-for')
   try {
     const serverResponse = await axios.get(
-      `${process.env.API_BASEURL}/auth/discord/callback?code=${code}`,
+      `${serverEnv.API_URL}/auth/discord/callback?code=${code}`,
       {
         headers: {
           ...(userAgent ? { 'User-Agent': userAgent } : null),
@@ -32,8 +32,9 @@ export async function GET(req: NextRequest) {
       //   discordAccessToken,
       discordRefreshToken,
     } = serverResponse.data
+    console.log(url.origin, serverResponse.data)
 
-    const redirectUrl = new URL('/account', 'http://localhost:3001')
+    const redirectUrl = new URL('/account', url.origin)
     // Crie uma resposta de redirecionamento.
     const response = NextResponse.redirect(redirectUrl)
 
