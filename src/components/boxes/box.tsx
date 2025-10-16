@@ -5,9 +5,11 @@ import { twMerge } from 'tailwind-merge'
 
 interface BoxProps extends ComponentProps<'div'> {
   title: string
+  subtitle?: string
 }
 export default function Box({
   title,
+  subtitle,
   children,
   className,
   ...props
@@ -21,6 +23,7 @@ export default function Box({
       {...props}
     >
       <Subtitle>{title}</Subtitle>
+      {subtitle && <span className="text-sm text-gray-500  ">{subtitle}</span>}
       <MainDivisor />
       {children}
     </div>

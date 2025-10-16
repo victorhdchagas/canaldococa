@@ -29,7 +29,7 @@ export default function ContextMenu({
   return (
     <div className="relative">
       <div
-        className="flex items-center gap-2 cursor-pointer relative mr-4 md:mr-0"
+        className="flex items-center gap-2 cursor-pointer relative md:mr-0"
         onClick={() => setIsOpen(!isOpen)} // Alterna o estado ao clicar
       >
         <Avatar className="w-12 h-12">
