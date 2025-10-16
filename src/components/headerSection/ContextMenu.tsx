@@ -10,39 +10,40 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { Avatar, AvatarFallback } from '../ui/avatar'
+import { AvatarImage } from '@radix-ui/react-avatar'
+import { twMerge } from 'tailwind-merge'
 
 export default function ContextMenu({
   userAvatar,
   role,
+  username,
 }: {
   userAvatar: string
   role: string
+  username: string
 }) {
-  const router = useRouter()
   const { logout } = useLogout()
   const [isOpen, setIsOpen] = useState(false)
-  async function handleLogout() {
-    const response = await fetch('/api/auth/logout')
-    if (response.status == 200) {
-      router.push('/')
-    }
-  }
 
   return (
     <div className="relative">
       <div
-        className="flex items-center gap-2 cursor-pointer"
+        className="flex items-center gap-2 cursor-pointer relative mr-4 md:mr-0"
         onClick={() => setIsOpen(!isOpen)} // Alterna o estado ao clicar
       >
-        <img
-          src={userAvatar}
-          alt="User Avatar"
-          className="w-10 h-10 rounded-full object-cover"
-        />
+        <Avatar className="w-12 h-12">
+          <AvatarImage src={userAvatar} />
+          <AvatarFallback>{username[0] + username[1]}</AvatarFallback>
+        </Avatar>
+
         <HugeiconsIcon
           icon={ArrowDown01FreeIcons}
           size={24}
-          className="text-yellow-500"
+          className={twMerge(
+            'text-yellow-500 absolute -right-2 -bottom-1 bg-gray-800 rounded-full h-5 w-5 transition-all',
+            isOpen ? 'rotate-180' : '',
+          )}
         />
       </div>
 
@@ -68,7 +69,7 @@ export default function ContextMenu({
               Meu Perfil
             </Link>
             <Link
-              href="/settings"
+              href="/account/settings"
               className="block px-4 py-2 text-sm text-yellow-500 hover:bg-gray-700"
               onClick={() => setIsOpen(false)}
             >
