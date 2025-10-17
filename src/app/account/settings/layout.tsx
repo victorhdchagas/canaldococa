@@ -19,7 +19,7 @@ export default async function AccountLayout({
           <SidebarTrigger />
         </HeaderSidebarSection>
         <MainDivisor />
-        <GridContainer className="gap-2">{children}</GridContainer>
+        {children}
       </PageContainer>
     </SidebarProvider>
   )
