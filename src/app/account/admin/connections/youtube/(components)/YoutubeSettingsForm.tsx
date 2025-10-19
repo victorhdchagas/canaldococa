@@ -1,8 +1,8 @@
 'use client'
+import { ControlledFormField } from '@/components/inputs/ControlledFormField'
 // app/account/youtube/(components)/YoutubeSettingsForm.tsx
 
 import {
-  EcoPowerFreeIcons,
   HotspotOfflineFreeIcons,
   InformationSquareFreeIcons,
   Wifi01FreeIcons,
@@ -11,23 +11,9 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { Label } from '@radix-ui/react-label'
 import * as Switch from '@radix-ui/react-switch'
 import { AnimatePresence, motion } from 'framer-motion'
-import { stat } from 'fs'
 import Link from 'next/link'
-import { ComponentProps, InputHTMLAttributes, useState } from 'react'
+import { ComponentProps, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-// Supondo que você tenha componentes de UI básicos
-// Importações de componentes de UI (ajuste os caminhos conforme sua estrutura)
-// import { Input } from '@/components/ui/input'
-// import { Button } from '@/components/ui/button'
-
-// Componente Placeholder para Input e Button, caso você não tenha um /ui
-const Input = ({ ...props }: ComponentProps<'input'>) => (
-  <input
-    {...props}
-    className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 rounded-sm p-2 text-sm focus:ring-yellow-500 w-full"
-    min="0"
-  />
-)
 const Button = ({
   children,
   className,
@@ -43,83 +29,6 @@ const Button = ({
     {children}
   </button>
 )
-
-// --- Estrutura do Campo de Formulário com Ajuda ---
-interface FormFieldProps {
-  label: string
-  name: string
-  value: number | string
-  onChange: (value: number) => void
-  helpText: string
-  type?: 'number' | 'text'
-  unit?: string // Ex: "XP", "mensagens"
-  disabled?: boolean
-}
-
-function ConfigFormField({
-  label,
-  name,
-  value,
-  onChange,
-  helpText,
-  type = 'number',
-  unit,
-  disabled,
-}: FormFieldProps) {
-  const [showHelp, setShowHelp] = useState(false)
-
-  return (
-    <div className="flex flex-col gap-1 w-full p-2 bg-gray-900 rounded-md relative">
-      <div className="flex justify-between items-center">
-        <Label htmlFor={name} className="text-sm text-gray-300 font-mono">
-          {label}
-        </Label>
-        <button
-          onClick={() => setShowHelp((s) => !s)}
-          className="transition-all text-gray-400 hover:text-yellow-500"
-          type="button"
-          aria-label={`Ajuda sobre ${label}`}
-        >
-          <HugeiconsIcon icon={InformationSquareFreeIcons} size={20} />
-        </button>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Input
-          id={name}
-          type={type}
-          value={value}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            onChange(Number(e.target.value))
-          }
-          disabled={disabled}
-          placeholder="0"
-        />
-        {unit && (
-          <span className="text-sm text-gray-400 font-mono">{unit}</span>
-        )}
-      </div>
-      <AnimatePresence>
-        {showHelp && (
-          <motion.p
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="absolute top-6 left-0 text-xs text-gray-400  flex items-center gap-2 md:gap-4  bg-gray-700 rounded-sm px-3 py-2 my-1"
-          >
-            <HugeiconsIcon
-              icon={InformationSquareFreeIcons}
-              size={24}
-              onClick={() => setShowHelp((state) => !state)}
-              className="absolute cursor-pointer -top-5 md:-top-5 right-1.5  bg-gray-800 rounded-md "
-            />
-            <span>{helpText}</span>
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
 
 // --- Estrutura do Switch de Ativação ---
 interface ConfigSwitchProps {
@@ -277,7 +186,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
         />
 
         <div className="grid md:grid-cols-3 gap-4 mt-4">
-          <ConfigFormField
+          <ControlledFormField
             label="XP por Mensagem na live"
             name="xpPerMessage"
             value={settings.xpPerMessageLive as number}
@@ -285,7 +194,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             helpText="XP concedido por cada mensagem única enviada no chat da live. Ajuste para balancear o engajamento."
             unit="XP"
           />
-          <ConfigFormField
+          <ControlledFormField
             label="XP por Membro Novo (Bônus)"
             name="xpPerNewMember"
             value={settings.xpPerNewMember as number}
@@ -293,7 +202,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             helpText="Bônus único de XP ao se tornar um membro pago do canal (Subscriber)."
             unit="XP"
           />
-          <ConfigFormField
+          <ControlledFormField
             label="XP por Super Chat (por R$)"
             name="xpPerSuperchat"
             value={settings.xpPerSuperchat as number}
@@ -342,7 +251,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
           </span>
         </h4>
         <div className="grid md:grid-cols-2 gap-4">
-          <ConfigFormField
+          <ControlledFormField
             disabled
             label="Mensagens Mínimas para XP"
             name="minMessages"
@@ -351,7 +260,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             helpText="O número mínimo de mensagens que um usuário precisa enviar antes de começar a ganhar XP. Ajuda a evitar bots e spam."
             unit="mensagens"
           />
-          <ConfigFormField
+          <ControlledFormField
             disabled
             label="Limite de XP/Minuto"
             name="xpLimitPerMinute"
@@ -372,7 +281,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
           </span>
         </h3>
         <div className="grid md:grid-cols-2 gap-4">
-          <ConfigFormField
+          <ControlledFormField
             label="URL Amigável da Comunidade (Slug)"
             name="channelSlug"
             value={settings.channelSlug as string}

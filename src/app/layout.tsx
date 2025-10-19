@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import QueryProvider from '@/contexts/queryClientProvider'
@@ -10,11 +10,14 @@ const geistSans = Geist({
   subsets: ['latin'],
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+}
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
 })
-
 export const metadata: Metadata = {
   title: 'Canal do Coca',
   description: 'Pagina do Canal do Coca',
@@ -26,8 +29,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <html>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

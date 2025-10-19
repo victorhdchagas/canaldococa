@@ -49,6 +49,7 @@ export default function UserTitles() {
             'flex flex-col min-h-20 w-full justify-center shadow-s rounded-lg bg-gradient-to-b from-gray-800 to-gray-900 px-2 mb-2 group select-none',
             title.isActive ? 'border-2 border-dashed border-gray-600' : '',
           )}
+          key={title.id}
         >
           <span
             className={twMerge(

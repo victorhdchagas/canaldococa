@@ -74,7 +74,7 @@ export default function UserStatus({ user }: UserStatusProps) {
                 user.connections.youtube ? 'text-green-400' : 'text-red-400'
               }
             >
-              {user.connections.youtube ? 'Conectado' : 'Disconectado'}
+              {user.connections.youtube ? 'Conectado' : 'Desconectado'}
             </span>
             <span className="text-right text-blue-400 cursor-pointer hover:text-blue-300">
               {user.connections.youtube ? '/disconnect' : '/connect'}
@@ -88,7 +88,7 @@ export default function UserStatus({ user }: UserStatusProps) {
                 user.connections.discord ? 'text-green-400' : 'text-red-400'
               }
             >
-              {user.connections.discord ? 'Conectado' : 'Disconectado'}
+              {user.connections.discord ? 'Conectado' : 'Desconectado'}
             </span>
             <span className="text-right text-blue-400 cursor-pointer hover:text-blue-300">
               {user.connections.discord ? '/disconnect' : '/connect'}
@@ -101,7 +101,7 @@ export default function UserStatus({ user }: UserStatusProps) {
                 user.connections.kick ? 'text-green-400' : 'text-red-400'
               }
             >
-              {user.connections.kick ? 'Conectado' : 'Disconectado'}
+              {user.connections.kick ? 'Conectado' : 'Desconectado'}
             </span>
             <span className="text-right text-blue-400 cursor-pointer hover:text-blue-300">
               {user.connections.kick ? '/disconnect' : '/connect'}
