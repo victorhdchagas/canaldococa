@@ -14,6 +14,10 @@ export async function GET(
       error: 'platform must be one of "youtube", "discord" or "kick"',
     })
   }
-  const connections = await getUserConnections()
-  return Response.json(connections[platform.data])
+  try {
+    const connections = await getUserConnections(platform.data)
+
+    console.log(connections)
+    return Response.json(connections)
+  } catch (error) {}
 }

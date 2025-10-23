@@ -27,7 +27,7 @@ export async function serverApiFetch(
   let response = await fetch(url, {
     ...fetchOptions,
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `bearer ${token}`,
       'Content-Type': 'application/json',
       ...fetchOptions.headers,
     },

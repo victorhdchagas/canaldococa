@@ -31,7 +31,7 @@ export default function UserSettingsForm() {
       context.client.setQueryData(queryKey, (old) => {
         toast.success('URL atualizada com sucesso')
         console.log(response)
-        return response.data.data
+        return response.data
       })
     },
     onError: (_error, _variables, _onMutateResult, ctx) => {
