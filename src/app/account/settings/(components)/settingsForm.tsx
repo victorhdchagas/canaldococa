@@ -3,7 +3,7 @@ import { FormField } from '@/components/inputs/FormField'
 import { UserSettingsSchema } from '@/core/schemas/userDataSchema'
 import { GetUserSettings, updateUserSettings } from '@/core/user/settings'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useState } from 'react'
+import React from 'react'
 import { toast } from 'sonner'
 
 export default function UserSettingsForm() {
@@ -28,7 +28,7 @@ export default function UserSettingsForm() {
         })
         return
       }
-      context.client.setQueryData(queryKey, (old) => {
+      context.client.setQueryData(queryKey, () => {
         toast.success('URL atualizada com sucesso')
         console.log(response)
         return response.data

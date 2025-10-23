@@ -5,7 +5,6 @@ import HeaderSection from '@/components/headerSection/headerSection'
 import HeroSection from '@/components/heroSection/heroSection'
 import LiveSection from '@/components/liveSection/liveSection'
 import VideoSection from '@/components/videosection/videosSection'
-import { Suspense } from 'react'
 
 export default function Home() {
   return (

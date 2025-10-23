@@ -1,6 +1,5 @@
 'use client'
 import { UserContext } from '@/contexts/userContext'
-import Link from 'next/link'
 import { PropsWithChildren, useContext } from 'react'
 import LoginButton from '../LoginButton'
 import ContextMenu from './ContextMenu'

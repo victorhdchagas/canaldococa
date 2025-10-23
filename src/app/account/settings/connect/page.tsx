@@ -1,5 +1,4 @@
 import Box from '@/components/boxes/box'
-import React, { Suspense } from 'react'
 import UserConnectionCard from './(components)/userconnectionCard'
 
 export default function SettingsConnectpage() {

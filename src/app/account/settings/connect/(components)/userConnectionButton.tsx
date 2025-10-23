@@ -7,7 +7,7 @@ export default function UserConnectionButton({
 }: {
   platform: string
 }) {
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: ['user.connections.resources', platform],
     queryFn: async () => {
       const response = await fetch(`/api/user/connections/${platform}`)

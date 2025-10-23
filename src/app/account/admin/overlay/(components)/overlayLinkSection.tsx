@@ -26,7 +26,7 @@ export default function OverlayLinkSection() {
 
   const { mutate, isPending: isMutatePending } = useMutation({
     onSuccess(data, _variables, _onMutateResult, context) {
-      context.client.setQueryData(queryKey, (old) => {
+      context.client.setQueryData(queryKey, () => {
         toast.success('URL atualizada com sucesso')
         return data
       })

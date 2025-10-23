@@ -11,7 +11,7 @@ export async function isValidSession() {
   const refreshToken = cookieStore.get('refreshToken')?.value
 
   try {
-    const payload = token ? await isTokenValid(token) : null
+    token ? await isTokenValid(token) : null
   } catch (error) {
     if (error instanceof RefreshTokenException) {
       if (refreshToken) {
@@ -40,7 +40,7 @@ export async function isValidSession() {
             await response.json()
 
           cookieStore.set('token', accessToken)
-          cookieStore.set('refreshToken', refreshToken)
+          cookieStore.set('refreshToken', newRefreshToken)
           return true
         } catch (error) {
           console.error(error)

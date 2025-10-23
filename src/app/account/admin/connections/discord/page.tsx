@@ -2,12 +2,9 @@ import MainDivisor from '@/components/divisors/maindivisor'
 import HeaderSection from '@/components/headerSection/headerSection'
 import PageContainer from '@/components/Page/PageContainer'
 import Title from '@/components/text/title'
-import React, { Suspense } from 'react'
 import DiscordSettingsForm from './(components)/DiscordSettignsForm'
 
-export default function DiscordSettingsPage({
-  searchParams,
-}: {
+export default function DiscordSettingsPage({}: {
   searchParams: Promise<{ welcome?: string }>
 }) {
   return (

@@ -19,5 +19,5 @@ export async function GET(
 
     console.log(connections)
     return Response.json(connections)
-  } catch (error) {}
+  } catch {}
 }

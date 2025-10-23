@@ -1,8 +1,5 @@
 import HeaderSection from '@/components/headerSection/headerSection'
-import Title from '@/components/text/title'
 import SubscribersSettings from './(components)/subscribersSettings'
-import { getAllOverlays } from '@/core/admin/overlay.service'
-import Subtitle from '@/components/text/subtitle'
 
 export default async function OverlayPage() {
   //   const overlays = await getAllOverlays()

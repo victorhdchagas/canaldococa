@@ -193,6 +193,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             onChange={(val) => handleChange('xpPerMessageLive', val)}
             helpText="XP concedido por cada mensagem única enviada no chat da live. Ajuste para balancear o engajamento."
             unit="XP"
+            type="number"
           />
           <ControlledFormField
             label="XP por Membro Novo (Bônus)"
@@ -201,6 +202,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             onChange={(val) => handleChange('xpPerNewMember', val)}
             helpText="Bônus único de XP ao se tornar um membro pago do canal (Subscriber)."
             unit="XP"
+            type="number"
           />
           <ControlledFormField
             label="XP por Super Chat (por R$)"
@@ -209,6 +211,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             onChange={(val) => handleChange('xpPerSuperchat', val)}
             helpText="XP concedido por cada unidade monetária (Real ou Dólar, dependendo da configuração) gasta em Super Chat."
             unit="XP / R$"
+            type="number"
           />
         </div>
 
@@ -259,6 +262,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             onChange={(val) => handleChange('minMessages', val)}
             helpText="O número mínimo de mensagens que um usuário precisa enviar antes de começar a ganhar XP. Ajuda a evitar bots e spam."
             unit="mensagens"
+            type="number"
           />
           <ControlledFormField
             disabled
@@ -268,6 +272,7 @@ export default function YoutubeSettingsForm(props: YoutubeSettingsFormProps) {
             onChange={(val) => handleChange('xpLimitPerMinute', val)}
             helpText="O teto máximo de XP que um usuário pode acumular em um minuto. Protege contra farm artificial de XP."
             unit="XP / min"
+            type="number"
           />
         </div>
       </section>

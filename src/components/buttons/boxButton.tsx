@@ -1,10 +1,9 @@
 import { CursorDisabled01FreeIcons } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { ButtonHTMLAttributes } from 'react'
 export default function BoxButton({
   children,
   ...props
-}: ButtonHTMLAttributes<{}>) {
+}: React.ComponentProps<'button'>) {
   return (
     <button
       className="w-full text-lg rounded-sm border bg-gray-950 border-yellow-600 text-yellow-500

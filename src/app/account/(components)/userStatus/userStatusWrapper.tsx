@@ -1,7 +1,17 @@
 import UserStatus from './userStatus'
 
+type UserStatusProps = {
+  name: string
+  progress: { level: number; currentXP: number; nextLevel: number }
+  tags: string[]
+  connections: {
+    youtube: boolean
+    discord: boolean
+    kick: boolean
+  }
+}
 export default async function UserStatusWrapper() {
-  const userStatus = await new Promise((res) =>
+  const userStatus: UserStatusProps = await new Promise((res) =>
     setTimeout(
       () =>
         res({

@@ -34,7 +34,6 @@ export function FormField<T extends InputType>({
   onChange,
 }: FormFieldProps<T>) {
   const [showHelp, setShowHelp] = useState(false)
-
   return (
     <div className="flex flex-col gap-1 w-full p-2 bg-gray-900 rounded-md relative">
       <div className="flex justify-between items-center">

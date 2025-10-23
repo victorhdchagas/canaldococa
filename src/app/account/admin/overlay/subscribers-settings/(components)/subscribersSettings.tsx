@@ -2,8 +2,17 @@
 import ErrorBox from '@/components/boxes/errorBox'
 import LoadingBox from '@/components/boxes/loadingBox'
 import BoxButton from '@/components/buttons/boxButton'
-import { toast } from 'sonner'
+import SubmitButton from '@/components/buttons/submitbutton'
 import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import {
   getOverlayAudios,
@@ -14,19 +23,9 @@ import {
 } from '@/core/admin/clientOverlay.service'
 import { useMutation, useQueries, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
-import { OverlaySubscribersSettings } from '@/types/services'
-import SubmitButton from '@/components/buttons/submitbutton'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import SelectImagesSettings from './selectImagesSettings'
+import { toast } from 'sonner'
 import SelectAudioSettings from './selectAudioSettings'
+import SelectImagesSettings from './selectImagesSettings'
 
 interface SubscriberSettingsProps {
   duration: number
@@ -115,7 +114,7 @@ export default function SubscribersSettings() {
 
       mutation.mutate({ ...settingsData!, enabled: checked ? 'on' : 'off' })
     },
-    [settingsData],
+    [settingsData, mutation],
   )
 
   const isPending = isPendingSettings || isPendingAudio || isPendingImages

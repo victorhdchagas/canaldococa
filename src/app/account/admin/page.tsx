@@ -12,7 +12,6 @@ export default async function UserPage({
 }: {
   searchParams?: Promise<{ query?: string }>
 }) {
-  const query = await searchParams
   const token = await getToken()
 
   return (

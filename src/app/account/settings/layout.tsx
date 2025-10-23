@@ -1,10 +1,8 @@
-import PageContainer from '@/components/Page/PageContainer'
-import SettingsSidebar from './(components)/settingsSidebar'
-import HeaderSection from '@/components/headerSection/headerSection'
 import MainDivisor from '@/components/divisors/maindivisor'
-import GridContainer from '@/components/Page/GridContainer'
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import HeaderSidebarSection from '@/components/headerSection/headerSidebarSection'
+import PageContainer from '@/components/Page/PageContainer'
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import SettingsSidebar from './(components)/settingsSidebar'
 
 export default async function AccountLayout({
   children,

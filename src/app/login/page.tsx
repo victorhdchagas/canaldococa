@@ -1,6 +1,5 @@
 'use client'
 import { UserContext } from '@/contexts/userContext'
-import { clientEnv } from '@/env/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useContext, useState } from 'react'

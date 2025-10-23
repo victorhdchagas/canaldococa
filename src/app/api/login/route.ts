@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-import { serverEnv } from '@/env/server'
 import { clientEnv } from '@/env/client'
+import { serverEnv } from '@/env/server'
+import { cookies } from 'next/headers'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
@@ -55,12 +55,7 @@ export async function POST(request: NextRequest) {
     }
     //RefreshDiscordToken Refreshed
     const tokens = await tokenResponse.json()
-    const {
-      accessToken,
-      refreshToken,
-      discordAccessToken,
-      discordRefreshToken,
-    } = tokens
+    const { accessToken, refreshToken, discordRefreshToken } = tokens
     const response = NextResponse.json({
       success: true,
       message: 'Sessão atualizada',

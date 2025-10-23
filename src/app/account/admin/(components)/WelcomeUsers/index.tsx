@@ -1,10 +1,8 @@
 'use client'
-import Subtitle from '@/components/text/subtitle'
 import { SocketEvents } from '@/consts/socket-enums'
 import { useWebSocket, WebSocketMessage } from '@/lib/useWebsocket'
 import {
   FileNotFoundFreeIcons,
-  UserAccountFreeIcons,
   UserAdd02FreeIcons,
   UserSwitchFreeIcons,
 } from '@hugeicons/core-free-icons'
@@ -78,7 +76,7 @@ export default function WelcomeUser({
         hour: '2-digit',
         minute: '2-digit',
       })
-    } catch (e) {
+    } catch {
       return 'Data Inválida'
     }
   }

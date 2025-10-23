@@ -7,12 +7,11 @@ import {
   Logout01FreeIcons,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { Avatar, AvatarFallback } from '../ui/avatar'
 import { AvatarImage } from '@radix-ui/react-avatar'
+import Link from 'next/link'
+import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Avatar, AvatarFallback } from '../ui/avatar'
 
 export default function ContextMenu({
   userAvatar,

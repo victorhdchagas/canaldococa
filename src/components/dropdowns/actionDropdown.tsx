@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,7 +8,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Button } from '@/components/ui/button'
 import { MoreHorizontal } from 'lucide-react'
 
 interface ActionDropdownProps {
@@ -20,7 +20,6 @@ interface ActionDropdownProps {
 export function ActionDropdown({
   userId,
   onEdit,
-  onDelete,
   onActivate,
 }: ActionDropdownProps) {
   return (

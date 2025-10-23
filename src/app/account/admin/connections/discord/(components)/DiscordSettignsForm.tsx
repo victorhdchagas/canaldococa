@@ -8,26 +8,17 @@ import {
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Label } from '@radix-ui/react-label'
-import * as Switch from '@radix-ui/react-switch'
 import * as Select from '@radix-ui/react-select' // Importação Radix Select
 import { AnimatePresence, motion } from 'framer-motion'
+import { Check, ChevronDown } from 'lucide-react' // Ícones para o Select
 import Link from 'next/link'
 import { ComponentProps, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { ChevronDown, Check } from 'lucide-react' // Ícones para o Select
 import {
   ConfigFormField,
   ConfigSwitch,
 } from '../../youtube/(components)/inputs'
 
-// Componentes Placeholder (usados no seu código do YouTube)
-const Input = ({ ...props }) => (
-  <input
-    {...props}
-    className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 rounded-sm p-2 text-sm focus:ring-yellow-500 w-full"
-    min="0"
-  />
-)
 const Button = ({
   children,
   className,

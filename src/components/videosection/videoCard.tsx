@@ -1,4 +1,5 @@
 import { Video } from '@/types/services'
+import Image from 'next/image'
 import React from 'react'
 
 export default function VideoCard({ video }: { video: Video }) {
@@ -9,7 +10,8 @@ export default function VideoCard({ video }: { video: Video }) {
      select-none relative shadow-md hover:scale-105 hover:rotate-1 hover:z-10 transition-transform animate-fade-in group md:max-w-[365px]"
     >
       <div className="relative">
-        <img
+        <Image
+          alt="video thumbnail"
           src={video.media.thumbnail}
           className="rounded-t-2xl rounded-b-sm md:group-hover:opacity-100 md:opacity-80 transition-all"
         />

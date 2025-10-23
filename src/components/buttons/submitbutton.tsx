@@ -3,12 +3,12 @@ import {
   SendToMobileFreeIcons,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { ButtonHTMLAttributes } from 'react'
+import React from 'react'
 
 export default function SubmitButton({
   children,
   ...props
-}: ButtonHTMLAttributes<{}>) {
+}: React.ComponentProps<'button'>) {
   return (
     <button
       type="submit"

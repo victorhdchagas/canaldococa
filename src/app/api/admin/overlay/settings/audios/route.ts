@@ -1,4 +1,3 @@
-import { getUserFromCookies } from '@/core/cookie.service'
 import { unauthorized } from 'next/navigation'
 import { NextRequest } from 'next/server'
 

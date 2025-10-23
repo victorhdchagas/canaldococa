@@ -1,10 +1,9 @@
 import { getToken } from '@/core/cookie.service'
 import { UserSettingsSchema } from '@/core/schemas/userDataSchema'
-import { getUserConnections } from '@/core/user/connections'
 import { serverEnv } from '@/env/server'
 import { NextRequest } from 'next/server'
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   const token = await getToken()
   if (!token) return Response.json(['Falha na credencial'], { status: 401 })
 

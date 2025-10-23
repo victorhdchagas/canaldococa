@@ -21,7 +21,6 @@ export async function GET(req: NextRequest) {
     return new Response('Missing code parameter', { status: 400 })
   }
   const token = await getToken()
-  console.log(token)
   try {
     const serverResponse = await axios.get(
       `${serverEnv.API_URL}/auth/youtube/callback?code=${code}&scope=${scope}`,
