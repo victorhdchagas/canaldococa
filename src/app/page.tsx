@@ -15,7 +15,20 @@ export default function Home() {
       <VideoSection />
       <BubblesSection />
       <BecomeSubscriberSection />
-      <FooterSection socialNetworks={[]} />
+      <FooterSection
+        socialNetworks={[
+          {
+            id: 1,
+            type: 'youtube',
+            uri: 'https://www.youtube.com/@CocaLives',
+          },
+          {
+            id: 2,
+            type: 'kick',
+            uri: 'https://kick.com/canaldococa',
+          },
+        ]}
+      />
     </div>
   )
 }

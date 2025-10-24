@@ -9,6 +9,16 @@ jiti.import('./src/env/client')
 
 const nextConfig: NextConfig = {
   /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.ytimg.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 export default nextConfig

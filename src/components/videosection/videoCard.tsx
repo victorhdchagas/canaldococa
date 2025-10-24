@@ -10,10 +10,10 @@ export default function VideoCard({ video }: { video: Video }) {
      select-none relative shadow-md hover:scale-105 hover:rotate-1 hover:z-10 transition-transform animate-fade-in group md:max-w-[365px]"
     >
       <div className="relative">
-        <Image
+        <img
           alt="video thumbnail"
           src={video.media.thumbnail}
-          className="rounded-t-2xl rounded-b-sm md:group-hover:opacity-100 md:opacity-80 transition-all"
+          className="rounded-t-2xl rounded-b-sm md:group-hover:opacity-100 md:opacity-80 transition-all w-full"
         />
         <span className="absolute bottom-2 right-3 text-gray-300 z-10">
           Views {video.media.community.statistics.views}

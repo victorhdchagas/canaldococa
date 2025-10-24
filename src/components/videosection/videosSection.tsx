@@ -13,7 +13,7 @@ export default async function VideoSection() {
       <span className="text-yellow-500 text-4xl mx-auto py-4 font-bold">
         Ultimos vídeos
       </span>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-2 ">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-2 ">
         {videos.map((video) => (
           <VideoCard video={video} key={video.videoId} />
         ))}

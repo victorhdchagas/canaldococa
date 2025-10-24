@@ -34,7 +34,7 @@ export function UserProvider({ children }: PropsWithChildren) {
   }
   useEffect(() => {
     refresh()
-  }, [router, refresh])
+  }, [router])
 
   return (
     <UserContext.Provider value={{ user, setUser, isLoading, refresh }}>
