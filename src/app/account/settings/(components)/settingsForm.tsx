@@ -29,7 +29,7 @@ export default function UserSettingsForm() {
         return
       }
       context.client.setQueryData(queryKey, () => {
-        toast.success('URL atualizada com sucesso')
+        toast.success('Dados atualizados.')
         console.log(response)
         return response.data
       })
@@ -60,9 +60,12 @@ export default function UserSettingsForm() {
   }
   if (isError) return <div>{error.message}</div>
   return (
-    <form className="grid gap-2 grid-cols-1 " onSubmit={onSubmit}>
+    <form
+      className="grid gap-2 grid-cols-1 bg-gray-800 inset-shadow-lg inset-shadow-gray-800 rounded-md p-2 md:p-4 md:pt-1"
+      onSubmit={onSubmit}
+    >
       <FormField
-        helpText=""
+        helpText="Seu nome para exibição na plataforma, pode ser alterado a qualquer momento."
         label="Nome"
         name="name"
         DefaultValue={userSettings?.name || ''}
@@ -75,6 +78,7 @@ export default function UserSettingsForm() {
         helpText=""
         label="Email"
         name="email"
+        isBlur
         DefaultValue={userSettings?.email || ''}
         type="text"
         unit=""
@@ -88,11 +92,12 @@ export default function UserSettingsForm() {
         DefaultValue={userSettings?.username || ''}
         type="text"
         unit=""
+        isBlur
         isLoading={isPending}
         disabled={false}
       />
       <FormField
-        helpText=""
+        helpText="Seu nível de assinatura atual na plataforma. Assine para desbloquear mais recursos."
         label="Plano"
         name="plan"
         DefaultValue={userSettings?.plan || ''}
@@ -101,10 +106,11 @@ export default function UserSettingsForm() {
         isLoading={isPending}
         disabled={true}
       />
-      <div className="flex flex-row justify-end items-end">
+      <div className="flex flex-row justify-end items-end p-3 md:p-0">
         <button
           type="submit"
-          className="transition-all text-xs hover:shadow-m hover:text-gray-300 hover:from-gray-700 hover:scale-105 text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer py-1 px-1 w-20 rounded-md text-center mt-2"
+          className="transition-all text-base hover:shadow-m hover:text-gray-300 hover:from-gray-700 hover:scale-105 text-gray-400 bg-gradient-to-b from-gray-800 to-gray-900 shadow-s cursor-pointer 
+          pt-2 pb-1 md:py-2 px-2 md:px-3 md:w-20 rounded-md text-center mt-2 scale-110"
           disabled={isPending || isError}
         >
           {!isPending && <span>Salvar</span>}
