@@ -4,6 +4,8 @@ import './globals.css'
 import QueryProvider from '@/contexts/queryClientProvider'
 import { Toaster } from 'sonner'
 import { UserProvider } from '@/contexts/userProvider'
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister'
+import PushNotificationManager from '@/components/PushNotificationManager'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -35,6 +37,8 @@ export default function RootLayout({
       >
         <QueryProvider>
           <UserProvider>
+            <ServiceWorkerRegister />
+            <PushNotificationManager />
             <Toaster />
             {children}
           </UserProvider>
