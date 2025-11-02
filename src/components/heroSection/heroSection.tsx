@@ -37,12 +37,12 @@ export default function HeroSection() {
     <section className="hero">
       {currentPhrase && (
         <>
-          <div className="flex flex-col text-center select-none gap-2 bg-gray-800/80 backdrop-blur-lg p-4 rounded-lg">
+          <div className="flex flex-col text-center select-none gap-4 bg-card/90 backdrop-blur-md p-6 rounded-xl border border-border/50 shadow-m">
             {/* 3. Renderiza a frase escolhida dinamicamente */}
-            <span className="text-3xl font-bold text-yellow-500 text-shadow-lg animate-fade-in ">
+            <span className="text-4xl font-bold text-primary leading-tight animate-fade-in">
               {currentPhrase.title}
             </span>
-            <span className="text-xl text-gray-100">
+            <span className="text-lg text-muted-foreground leading-relaxed">
               {currentPhrase.subtitle}
             </span>
           </div>

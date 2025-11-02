@@ -6,14 +6,13 @@ export default async function VideoSection() {
 
   return (
     <section
-      className="flex flex-col mx-auto gap-8
-     md:gap-2 container  bg-gray-900"
+      className="flex flex-col mx-auto gap-4 container bg-background"
       id="videos"
     >
-      <span className="text-yellow-500 text-4xl mx-auto py-4 font-bold">
+      <span className="text-primary text-4xl mx-auto py-4 font-bold">
         Ultimos vídeos
       </span>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-2 ">
+      <div className="flex flex-wrap gap-4 justify-start">
         {videos.map((video) => (
           <VideoCard video={video} key={video.videoId} />
         ))}

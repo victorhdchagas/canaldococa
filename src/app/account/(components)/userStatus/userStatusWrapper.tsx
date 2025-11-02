@@ -24,7 +24,7 @@ export default async function UserStatusWrapper() {
             kick: false,
           },
         }),
-      4000,
+      200,
     ),
   )
   return <UserStatus user={userStatus} />

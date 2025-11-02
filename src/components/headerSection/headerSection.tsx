@@ -9,13 +9,13 @@ export default function HeaderSection() {
   const { user, isLoading } = useContext(UserContext)
 
   return (
-    <header className="grid grid-cols-4  bg-gray-900 text-2xl font-bold text-black  items-center h-[4.25rem] md:container md:mx-auto  justify-center py-2">
+    <header className="grid grid-cols-4 bg-background text-2xl font-bold text-foreground items-center h-16 md:container md:mx-auto justify-center py-4">
       <div className="flex flex-row items-center justify-start gap-1 text-yellow-500 col-span-1 text-2xl">
         <Link href="/">
-          <img
-            src="/assets/coca_head.png"
-            className="border-2 rounded-xl min-w-[6rem] w-[6rem] h-[3.20rem] object-cover bg-red-950"
-          />
+            <img
+              src="/assets/coca_head.png"
+              className="border-2 rounded-xl min-w-24 w-24 h-12 object-cover bg-destructive"
+            />
         </Link>
         <span className="ml-2 hidden md:block text-nowrap">Canal do Coca</span>
       </div>

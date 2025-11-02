@@ -1,45 +1,52 @@
 import { Video } from '@/types/services'
 import Image from 'next/image'
 import React from 'react'
+import { EyeFreeIcons, Calendar01FreeIcons } from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
 
 export default function VideoCard({ video }: { video: Video }) {
   return (
     <div
-      className="bg-gray-900  rounded-t-2xl flex flex-col justify-between gap-2
-      border border-gray-700 
-     select-none relative shadow-md hover:scale-105 hover:rotate-1 hover:z-10 transition-transform animate-fade-in group md:max-w-[365px]"
+      className="bg-card rounded-t-2xl flex flex-col justify-between gap-2
+      border border-border
+     select-none relative shadow-m hover:scale-105 hover:rotate-1 hover:z-10 transition-transform animate-fade-in group md:max-w-[365px]"
     >
       <div className="relative">
         <img
           alt="video thumbnail"
           src={video.media.thumbnail}
-          className="rounded-t-2xl rounded-b-sm md:group-hover:opacity-100 md:opacity-80 transition-all w-full"
+          className="rounded-t-2xl rounded-b-sm w-full"
         />
-        <span className="absolute bottom-2 right-3 text-gray-300 z-10">
-          Views {video.media.community.statistics.views}
-        </span>
       </div>
       <div
-        className="bg-gradient-to-b from-gray-900 to-gray-800
-      flex flex-col justify-between h-full w-full pb-2 gap-3"
+        className="bg-gradient-to-b from-card to-muted
+      flex flex-col h-full w-full gap-3"
       >
-        <span className="text-xl text-yellow-500 px-1.5 font-bold">
+        <span className="text-lg text-foreground px-4 font-bold">
           {video.title}
         </span>
-        <div className="flex flex-row justify-between w-full px-4 items-end ">
-          <span className="text-sm text-gray-500">
-            {video.published.toLocaleDateString('pt-br', {
-              timeZone: 'America/Sao_Paulo',
-            })}
-          </span>
-          <a
-            href={video.link}
-            className="text-md font-semibold transition-all
-            border rounded-sm hover:rounded-br-xl px-2 py-1 bg-yellow-500 text-gray-900 hover:bg-yellow-600"
-            target="_blank"
-          >
-            Acessar
-          </a>
+        <div className="flex flex-col gap-2 px-4 pb-2">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <HugeiconsIcon icon={EyeFreeIcons} size={16} />
+            <span>{video.media.community.statistics.views} views</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <HugeiconsIcon icon={Calendar01FreeIcons} size={16} />
+            <span>
+              {video.published.toLocaleDateString('pt-br', {
+                timeZone: 'America/Sao_Paulo',
+              })}
+            </span>
+          </div>
+          <div className="flex justify-end">
+            <a
+              href={video.link}
+              className="text-foreground hover:text-foreground/80 text-base font-semibold transition-colors"
+              target="_blank"
+            >
+              Acessar vídeo →
+            </a>
+          </div>
         </div>
       </div>
     </div>

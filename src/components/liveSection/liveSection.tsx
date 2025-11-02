@@ -43,8 +43,8 @@ export default function LiveSection({ channelId }: { channelId: string }) {
 
 function LiveCard({ children, title }: PropsWithChildren<{ title: string }>) {
   return (
-    <section className="container mx-auto flex flex-col w-full pb-4 bg-gray-900 transition-all">
-      <span className="text-yellow-500 text-4xl mx-auto py-4 font-bold">
+    <section className="container mx-auto flex flex-col w-full pb-4 bg-background transition-all">
+      <span className="text-primary text-4xl mx-auto py-4 font-bold">
         {title}
       </span>
       {children}
