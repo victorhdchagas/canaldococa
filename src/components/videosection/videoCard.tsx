@@ -20,12 +20,12 @@ export default function VideoCard({ video }: { video: Video }) {
       </div>
       <div
         className="bg-gradient-to-b from-card to-muted
-      flex flex-col h-full w-full gap-3"
+      flex flex-col justify-between h-full w-full"
       >
         <span className="text-lg text-foreground px-4 font-bold">
           {video.title}
         </span>
-        <div className="flex flex-col gap-2 px-4 pb-2">
+        <div className="flex flex-col gap-2 px-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <HugeiconsIcon icon={EyeFreeIcons} size={16} />
             <span>{video.media.community.statistics.views} views</span>
@@ -38,7 +38,7 @@ export default function VideoCard({ video }: { video: Video }) {
               })}
             </span>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end pb-2">
             <a
               href={video.link}
               className="text-foreground hover:text-foreground/80 text-base font-semibold transition-colors"
