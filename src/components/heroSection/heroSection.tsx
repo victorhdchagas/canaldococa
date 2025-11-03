@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import './hero.css'
+import Link from 'next/link'
+import { ArrowDown } from 'lucide-react'
 const PHRASES = [
   {
     title: 'Sinceridade Sem Patch de Correção.',
@@ -46,6 +48,13 @@ export default function HeroSection() {
             <span className="text-lg text-muted-foreground leading-relaxed">
               {currentPhrase.subtitle}
             </span>
+            <Link
+              href="#plans"
+              className="btn text-lg mt-2 ml-auto flex items-center group hover:scale-110 transition-transform"
+            >
+              Assine Agora{' '}
+              <ArrowDown className="ml-2 h-5 w-5 animate-pulse group-hover:duration-75 " />
+            </Link>
           </div>
           <Image
             src="/assets/coca_head.png"

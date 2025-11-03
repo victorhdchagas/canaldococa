@@ -9,23 +9,25 @@ export default function VideoCard({ video }: { video: Video }) {
     <div
       className="bg-card rounded-t-2xl flex flex-col justify-between gap-2
       border border-border
+      w-full 
      select-none relative shadow-m hover:scale-105 hover:rotate-1 hover:z-10 transition-transform animate-fade-in group md:max-w-[365px]"
     >
-      <div className="relative">
-        <Image
-          alt="video thumbnail"
-          src={video.media.thumbnail}
-          width={365}
-          height={200}
-          className="rounded-t-2xl rounded-b-sm w-full"
-        />
-      </div>
+      <Image
+        alt="video thumbnail"
+        src={video.media.thumbnail}
+        width={365}
+        height={200}
+        className="rounded-t-2xl rounded-b-sm w-full h-auto object-cover"
+      />
       <div
-        className="bg-gradient-to-b from-card to-muted
-      flex flex-col justify-between h-full w-full"
+        className="
+        px-1
+      flex flex-col justify-between h-full w-full overflow-hidden "
       >
-        <span className="text-lg text-foreground px-4 font-bold">
-          {video.title}
+        <span className="text-lg text-foreground px-4 font-bold  hyphens-manual">
+          {video.title
+            .substring(0, 40)
+            .concat(video.title.length > 39 ? '...' : '')}
         </span>
         <div className="flex flex-col gap-2 px-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">

@@ -9,7 +9,7 @@ export default async function VideoSection() {
       className="flex flex-col mx-auto gap-4 container bg-background"
       id="videos"
     >
-      <span className="text-primary text-4xl mx-auto py-4 font-bold">
+      <span className="text-primary text-4xl mx-auto py-8 font-bold">
         Ultimos vídeos
       </span>
       <div className="flex flex-wrap gap-4 justify-start">

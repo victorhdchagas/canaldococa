@@ -33,15 +33,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html className="dark">
+    <html className="dark" lang="pt-BR">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
           <UserProvider>
-            <SidebarProvider>
+            <SidebarProvider defaultOpen={false}>
               <SettingsSidebar />
-              <ServiceWorkerRegister />
+              {process.env.NODE_ENV !== 'development' && (
+                <ServiceWorkerRegister />
+              )}
               <PushNotificationManager />
               <Toaster />
               {children}
