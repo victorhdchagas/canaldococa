@@ -1,5 +1,5 @@
 'use client'
-import { PropsWithChildren, useEffect, useRef, useState } from 'react'
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react'
 import { UserContext } from './userContext'
 import { User } from '@/types/services'
 import { toast } from 'sonner'
@@ -10,7 +10,7 @@ export function UserProvider({ children }: PropsWithChildren) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const hasShownSessionExpired = useRef(false)
   const router = useRouter()
-  async function refresh() {
+  const refresh = useCallback(async () => {
     setIsLoading(true)
     try {
       const response = await fetch('/api/user/getbycookie')
@@ -31,10 +31,10 @@ export function UserProvider({ children }: PropsWithChildren) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [router])
   useEffect(() => {
     refresh()
-  }, [router])
+  }, [router, refresh])
 
   return (
     <UserContext.Provider value={{ user, setUser, isLoading, refresh }}>

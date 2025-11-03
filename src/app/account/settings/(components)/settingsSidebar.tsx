@@ -1,4 +1,5 @@
 import SidebarLink from '@/components/buttons/sidebarLink'
+import Image from 'next/image'
 import {
   Sidebar,
   SidebarContent,
@@ -18,8 +19,11 @@ export default function SettingsSidebar() {
     <Sidebar variant="floating">
       <SidebarHeader>
         <SidebarMenuItem>
-          <img
+          <Image
             src="/assets/coca_head.png"
+            alt="logo"
+            width={96}
+            height={52}
             className="border-2 rounded-xl min-w-[6rem] w-[6rem] h-[3.20rem] object-cover bg-red-950"
           />
         </SidebarMenuItem>

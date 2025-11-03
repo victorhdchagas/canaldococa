@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
   }
   const token = await getToken()
   try {
-    const serverResponse = await axios.get(
+    await axios.get(
       `${serverEnv.API_URL}/auth/youtube/callback?code=${code}&scope=${scope}`,
       {
         headers: {

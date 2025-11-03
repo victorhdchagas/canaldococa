@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import {
   Select,
   SelectContent,
@@ -26,7 +27,7 @@ export default function SelectImagesSettings({
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
-    const img = new Image()
+    const img = document.createElement('img') as HTMLImageElement
     img.crossOrigin = 'anonymous'
     img.src = image
     img.onload = () => {
@@ -86,7 +87,7 @@ export default function SelectImagesSettings({
           />
         )}
       </div>
-      {loadedImage && showImage && <img src={loadedImage} />}
+      {loadedImage && showImage && <Image src={loadedImage} alt="selected image" width={200} height={200} />}
     </div>
   )
 }

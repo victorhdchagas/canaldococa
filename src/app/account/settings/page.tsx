@@ -1,7 +1,6 @@
 import Box from '@/components/boxes/box'
 import UserSettingsForm from './(components)/settingsForm'
 import GridContainer from '@/components/Page/GridContainer'
-import Image from 'next/image'
 
 export default function SettingsRootpage() {
   return (

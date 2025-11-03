@@ -11,7 +11,7 @@ URL_PATHS.set('USER', [['Minha conta', '/account']])
 
 export function validateRole(role: string, path: string) {
   const adminRoutes = URL_PATHS.get('ADMIN')
-  if (adminRoutes?.some(([_, route]) => path.startsWith(route))) {
+  if (adminRoutes?.some(([, route]) => path.startsWith(route))) {
     if (role !== 'ADMIN') {
       throw new UserNotAllowedException()
     }

@@ -1,6 +1,7 @@
 'use client'
 import { UserContext } from '@/contexts/userContext'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useContext } from 'react'
 import LoginButton from '../LoginButton'
 import ContextMenu from './ContextMenu'
@@ -12,8 +13,11 @@ export default function HeaderSection() {
     <header className="grid grid-cols-4 bg-background text-2xl font-bold text-foreground items-center h-16 md:container md:mx-auto justify-center py-4">
       <div className="flex flex-row items-center justify-start gap-1 text-yellow-500 col-span-1 text-2xl">
         <Link href="/">
-            <img
+            <Image
               src="/assets/coca_head.png"
+              alt="logo"
+              width={96}
+              height={48}
               className="border-2 rounded-xl min-w-24 w-24 h-12 object-cover bg-destructive"
             />
         </Link>

@@ -1,8 +1,8 @@
 import React from 'react'
-import Title from '../text/title'
 import { Button } from '../ui/button'
 import { Check, Star } from 'lucide-react'
 import BubblesSection from '../bubbles/bubblesSection'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 
 interface SubscriptionCardProps {
@@ -37,9 +37,11 @@ function SubscriptionCard({
           </div>
         </div>
       )}
-      <img
+      <Image
         src={image}
         alt={title}
+        width={400}
+        height={192}
         className="w-full h-48 object-cover rounded-md mb-4"
       />
       <h3 className="text-xl font-semibold text-foreground mb-2">{title}</h3>

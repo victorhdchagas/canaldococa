@@ -1,6 +1,7 @@
 'use client'
 import { SocketEvents } from '@/consts/socket-enums'
 import { useWebSocket, WebSocketMessage } from '@/lib/useWebsocket'
+import Image from 'next/image'
 import {
   FileNotFoundFreeIcons,
   UserAdd02FreeIcons,
@@ -135,9 +136,11 @@ export default function WelcomeUser({
             bg-gray-800
              rounded-md p-4 w-full "
           >
-            <img
+            <Image
               src={event.avatar}
               alt={event.name}
+              width={40}
+              height={40}
               className="w-10 h-10 rounded-full object-cover"
             />
             <div className="flex flex-col flex-3">

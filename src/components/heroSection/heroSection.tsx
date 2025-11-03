@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import './hero.css'
 const PHRASES = [
   {
@@ -46,8 +47,11 @@ export default function HeroSection() {
               {currentPhrase.subtitle}
             </span>
           </div>
-          <img
+          <Image
             src="/assets/coca_head.png"
+            alt="hero image"
+            width={300}
+            height={384}
             className="bottom-0 left-0 h-64 md:h-96 w-auto absolute"
           />
         </>

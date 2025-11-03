@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export default function LiveSection({ channelId }: { channelId: string }) {
   const [isLive, setIsLive] = useState<boolean | null>(null)
@@ -31,9 +32,11 @@ export default function LiveSection({ channelId }: { channelId: string }) {
       aria-label="Ir para live"
     >
       <div className="absolute inset-0 bg-background rounded-full">
-        <img
+        <Image
           src="/assets/coca_head.png"
           alt=""
+          width={64}
+          height={64}
           className="w-full h-full object-cover rounded-full opacity-60"
         />
       </div>

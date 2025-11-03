@@ -12,9 +12,11 @@ export default function VideoCard({ video }: { video: Video }) {
      select-none relative shadow-m hover:scale-105 hover:rotate-1 hover:z-10 transition-transform animate-fade-in group md:max-w-[365px]"
     >
       <div className="relative">
-        <img
+        <Image
           alt="video thumbnail"
           src={video.media.thumbnail}
+          width={365}
+          height={200}
           className="rounded-t-2xl rounded-b-sm w-full"
         />
       </div>

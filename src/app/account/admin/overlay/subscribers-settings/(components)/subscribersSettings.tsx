@@ -27,14 +27,7 @@ import { toast } from 'sonner'
 import SelectAudioSettings from './selectAudioSettings'
 import SelectImagesSettings from './selectImagesSettings'
 
-interface SubscriberSettingsProps {
-  duration: number
-  enabled: boolean
-  internalName: string
-  position: string
-  sound: string
-  image: string
-}
+
 export default function SubscribersSettings() {
   const queryClient = useQueryClient()
   const [duration, setDuration] = useState(0)

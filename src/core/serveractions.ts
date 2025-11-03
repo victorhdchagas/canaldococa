@@ -11,7 +11,7 @@ export async function isValidSession() {
   const refreshToken = cookieStore.get('refreshToken')?.value
 
   try {
-    token ? await isTokenValid(token) : null
+    if (token) await isTokenValid(token)
   } catch (error) {
     if (error instanceof RefreshTokenException) {
       if (refreshToken) {

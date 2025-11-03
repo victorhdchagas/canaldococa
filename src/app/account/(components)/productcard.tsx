@@ -1,5 +1,6 @@
 import { Services } from '@/types/services'
 import React from 'react'
+import Image from 'next/image'
 import CheckoutButton from './checkout.button'
 
 export default function ServiceCard({
@@ -13,9 +14,11 @@ export default function ServiceCard({
     <div className="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white border border-gray-200 hover:shadow-xl transition-shadow duration-300">
       {/* Image Section */}
       <div className="relative h-48">
-        <img
+        <Image
           src={service.images[0] || '/placeholder-image.jpg'}
           alt={service.name}
+          width={400}
+          height={192}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
