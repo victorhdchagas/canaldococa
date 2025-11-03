@@ -35,6 +35,9 @@ export default function SettingsSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
+          <SidebarMenuButton asChild>
+            <SidebarLink href="/">Inicio</SidebarLink>
+          </SidebarMenuButton>
           <SidebarGroupLabel>Configurações da conta</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenuButton asChild>

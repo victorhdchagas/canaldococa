@@ -1,17 +1,17 @@
-'use client' // Use 'use client' para que o componente possa ter estado interativo
-
+'use client'
 import URL_PATHS from '@/consts/permissions'
 import { useLogout } from '@/lib/use-logout'
-import {
-  ArrowDown01FreeIcons,
-  Logout01FreeIcons,
-} from '@hugeicons/core-free-icons'
-import { HugeiconsIcon } from '@hugeicons/react'
-import { AvatarImage } from '@radix-ui/react-avatar'
+import { LogOut, Settings, User } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { Avatar, AvatarFallback } from '../ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 
 export default function ContextMenu({
   userAvatar,
@@ -23,71 +23,49 @@ export default function ContextMenu({
   username: string
 }) {
   const { logout } = useLogout()
-  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="relative">
-      <div
-        className="flex items-center gap-2 cursor-pointer relative md:mr-0"
-        onClick={() => setIsOpen(!isOpen)} // Alterna o estado ao clicar
-      >
-        <Avatar className="w-12 h-12">
-          <AvatarImage src={userAvatar} />
-          <AvatarFallback>{username[0] + username[1]}</AvatarFallback>
-        </Avatar>
-
-        <HugeiconsIcon
-          icon={ArrowDown01FreeIcons}
-          size={24}
-          className={twMerge(
-            'text-yellow-500 absolute -right-2 -bottom-1 bg-gray-800 rounded-full h-5 w-5 transition-all',
-            isOpen ? 'rotate-180' : '',
-          )}
-        />
-      </div>
-
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg z-10 transition-all duration-300 ease-in-out transform">
-          <div className="py-1">
-            {role === 'ADMIN' &&
-              URL_PATHS.get(role)?.map((role) => (
-                <Link
-                  key={role[0]}
-                  href={role[1]}
-                  className="block px-4 py-2 text-sm text-yellow-500 hover:bg-gray-700"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {role[0]}
-                </Link>
-              ))}
-            <Link
-              href="/account"
-              className="block px-4 py-2 text-sm text-yellow-500 hover:bg-gray-700"
-              onClick={() => setIsOpen(false)} // Fecha o menu após o clique
-            >
-              Meu Perfil
-            </Link>
-            <Link
-              href="/account/settings"
-              className="block px-4 py-2 text-sm text-yellow-500 hover:bg-gray-700"
-              onClick={() => setIsOpen(false)}
-            >
-              Configurações
-            </Link>
-            <hr className="border-gray-700 my-1" />
-            <button
-              onClick={() => {
-                setIsOpen(false)
-                logout()
-              }}
-              className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-gray-700"
-            >
-              <HugeiconsIcon icon={Logout01FreeIcons} size={24} />
-              Logout
-            </button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-ring">
+          <Avatar className="w-8 h-8">
+            <AvatarImage src={userAvatar} />
+            <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
+          </Avatar>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{username}</p>
+            <p className="text-xs leading-none text-muted-foreground">{role}</p>
           </div>
-        </div>
-      )}
-    </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {role === 'ADMIN' &&
+          URL_PATHS.get(role)?.map(([label, href]) => (
+            <DropdownMenuItem key={label} asChild>
+              <Link href={href}>{label}</Link>
+            </DropdownMenuItem>
+          ))}
+        <DropdownMenuItem asChild>
+          <Link href="/account" className="flex items-center gap-2">
+            <User className="w-4 h-4" />
+            Meu Perfil
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/account/settings" className="flex items-center gap-2">
+            <Settings className="w-4 h-4" />
+            Configurações
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive">
+          <LogOut className="w-4 h-4 mr-2" />
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

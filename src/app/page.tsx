@@ -5,28 +5,30 @@ import HeroSection from '@/components/heroSection/heroSection'
 import LiveSection from '@/components/liveSection/liveSection'
 import VideoSection from '@/components/videosection/videosSection'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="font-sans bg-gray-900 gap-4 not-first:gap-0 flex flex-col min-h-screen">
-      <HeaderSection />
-      <HeroSection />
-      <LiveSection channelId={process.env.YOUTUBE_CHANNEL_ID!} />
-      <VideoSection />
-      <BecomeSubscriberSection />
-      <FooterSection
-        socialNetworks={[
-          {
-            id: 1,
-            type: 'youtube',
-            uri: 'https://www.youtube.com/@CocaLives',
-          },
-          {
-            id: 2,
-            type: 'kick',
-            uri: 'https://kick.com/canaldococa',
-          },
-        ]}
-      />
-    </div>
+    <>
+      <div className="font-sans bg-gray-900 flex flex-col h-screen  text-white  mx-auto md:justify-start container">
+        <HeaderSection />
+        <HeroSection />
+        <LiveSection channelId={process.env.YOUTUBE_CHANNEL_ID!} />
+        <VideoSection />
+        <BecomeSubscriberSection />
+        <FooterSection
+          socialNetworks={[
+            {
+              id: 1,
+              type: 'youtube',
+              uri: 'https://www.youtube.com/@CocaLives',
+            },
+            {
+              id: 2,
+              type: 'kick',
+              uri: 'https://kick.com/canaldococa',
+            },
+          ]}
+        />
+      </div>
+    </>
   )
 }

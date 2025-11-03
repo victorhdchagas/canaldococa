@@ -1,11 +1,13 @@
+import PushNotificationManager from '@/components/PushNotificationManager'
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister'
+import { SidebarProvider } from '@/components/ui/sidebar'
+import QueryProvider from '@/contexts/queryClientProvider'
+import { UserProvider } from '@/contexts/userProvider'
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
-import QueryProvider from '@/contexts/queryClientProvider'
 import { Toaster } from 'sonner'
-import { UserProvider } from '@/contexts/userProvider'
-import ServiceWorkerRegister from '@/components/ServiceWorkerRegister'
-import PushNotificationManager from '@/components/PushNotificationManager'
+import SettingsSidebar from './account/settings/(components)/settingsSidebar'
+import './globals.css'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -37,10 +39,13 @@ export default function RootLayout({
       >
         <QueryProvider>
           <UserProvider>
-            <ServiceWorkerRegister />
-            <PushNotificationManager />
-            <Toaster />
-            {children}
+            <SidebarProvider>
+              <SettingsSidebar />
+              <ServiceWorkerRegister />
+              <PushNotificationManager />
+              <Toaster />
+              {children}
+            </SidebarProvider>
           </UserProvider>
         </QueryProvider>
       </body>
