@@ -18,7 +18,7 @@ export default function LoginCarousel() {
         <CarouselContent>
           <CarouselItem>
             <Image
-              src="/assets/choosemyweapon.png"
+              src="/assets/tag01.png"
               alt="Login"
               width={500}
               height={500}
