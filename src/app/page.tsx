@@ -1,6 +1,6 @@
 import BecomeSubscriberSection from '@/components/becomeSubSection/becomeSubSection'
 import FooterSection from '@/components/footerSection/footerSection'
-import HeaderSection from '@/components/headerSection/headerSection'
+import SimpleHeader from '@/components/headerSection/SimpleHeader'
 import HeroSection from '@/components/heroSection/heroSection'
 import LastVideoSection from '@/components/lastvideo/lastvideosection'
 import LiveSection from '@/components/liveSection/liveSection'
@@ -10,12 +10,16 @@ export default function HomePage() {
   return (
     <>
       <div className="font-sans bg-gray-900 flex flex-col h-screen  text-white  mx-auto md:justify-start container">
-        <HeaderSection />
+        <SimpleHeader />
         <HeroSection />
         <LiveSection channelId={process.env.YOUTUBE_CHANNEL_ID!} />
         <LastVideoSection />
-        <VideoSection />
-        <BecomeSubscriberSection />
+        <div id="video">
+          <VideoSection />
+        </div>
+        <div id="planos">
+          <BecomeSubscriberSection />
+        </div>
         <FooterSection
           socialNetworks={[
             {

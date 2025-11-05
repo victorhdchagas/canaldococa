@@ -40,7 +40,7 @@ export default function RootLayout({
         <QueryProvider>
           <UserProvider>
             <SidebarProvider defaultOpen={false}>
-              <SettingsSidebar />
+              {/* <SettingsSidebar /> */}
               {process.env.NODE_ENV !== 'development' && (
                 <ServiceWorkerRegister />
               )}

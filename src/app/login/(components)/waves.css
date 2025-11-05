@@ -1,0 +1,54 @@
+/* 1. Defina a animação de movimento horizontal */
+@keyframes move-wave {
+  0% {
+    transform: translateX(0) scaleX(2);
+  }
+  100% {
+    transform: translateX(-40%) scaleX(2);
+  }
+}
+@keyframes move-wave2 {
+  0% {
+    transform: translateX(0) scaleX(2);
+  }
+  100% {
+    transform: translateX(-70%) scaleX(3);
+  }
+}
+.wave-footer-divider path {
+  width: 200%;
+  transform-origin: center;
+}
+/* 2. Aplique a animação a cada camada */
+.wave-path-1 {
+  animation: move-wave 5s linear infinite alternate;
+  fill: hsl(343, 63%, 55%);
+  transform: scaleX(2);
+}
+
+.wave-path-2 {
+  /* Velocidade e direção diferentes para criar profundidade */
+  animation: move-wave 7s ease-in-out infinite alternate-reverse;
+
+  transform: scaleX(2);
+  fill: hsl(343, 63%, 35%);
+}
+
+.wave-path-3 {
+  /* Velocidade e direção diferentes para criar profundidade */
+  animation: move-wave2 11s ease-in infinite alternate-reverse;
+
+  transform: scaleX(2);
+  fill: hsl(343, 63%, 15%);
+}
+
+/* Container do SVG - Força o posicionamento na base */
+.wave-footer-divider {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px; /* Aumente esta altura para que a onda seja bem visível */
+  z-index: 0; /* Garante que fique no fundo da caixa de login */
+  overflow: hidden; /* Oculta partes do SVG que se movem para fora */
+}

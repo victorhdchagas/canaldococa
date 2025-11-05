@@ -1,0 +1,52 @@
+'use client'
+import Link from 'next/link'
+import Image from 'next/image'
+
+export default function SimpleHeader() {
+  return (
+    <div className="flex justify-start w-full mb-4">
+      <header className="flex items-center flex-1 justify-end gap-8 bg-gray-900 text-white h-[4.25rem] md:container md:mx-auto py-2 px-4">
+        <div className="text-gray-400 justify-self-start flex items-center gap-2 mr-auto select-none">
+          <Link href="/" className="hidden md:block">
+            <Image
+              src="/assets/coca_head.png"
+              alt="logo"
+              width={96}
+              height={48}
+              className="border-2 rounded-xl min-w-24 w-24 h-12 object-cover bg-destructive"
+            />
+          </Link>
+          <span className="text-gray-200 transition-colors text-2xl font-bold">
+            Canal do Coca
+          </span>
+        </div>
+        <nav className="hidden md:flex items-center gap-6">
+          <Link
+            href="/"
+            className="text-gray-300 font-semibold hover:border-b border-yellow-600 py-2 transition-colors"
+          >
+            Inicio
+          </Link>
+          <Link
+            href="#video"
+            className="text-gray-300 font-semibold hover:border-b border-yellow-600 py-2 transition-colors"
+          >
+            Video
+          </Link>
+          <Link
+            href="#planos"
+            className="text-gray-300 font-semibold hover:border-b border-yellow-600 py-2 transition-colors"
+          >
+            Planos
+          </Link>
+          <Link
+            href="/account"
+            className="text-gray-300 font-semibold hover:border-b border-yellow-600 py-2 transition-colors"
+          >
+            Conta
+          </Link>
+        </nav>
+      </header>
+    </div>
+  )
+}

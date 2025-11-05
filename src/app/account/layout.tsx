@@ -1,7 +1,9 @@
 // app/account/layout.tsx (não no layout raiz)
 import { RefreshHandler } from '@/components/RefreshHandler'
+import HeaderSection from '@/components/headerSection/headerSection'
 import { validateSession } from '@/lib/auth-server'
 import { redirect } from 'next/navigation'
+import SettingsSidebar from './settings/(components)/settingsSidebar'
 
 export default async function AccountLayout({
   children,
@@ -25,5 +27,10 @@ export default async function AccountLayout({
   }
 
   // Token válido, renderiza o conteúdo
-  return <>{children}</>
+  return (
+    <>
+      <SettingsSidebar />
+      {children}
+    </>
+  )
 }
