@@ -66,8 +66,10 @@
 
 :root {
   --shadow-s: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-m: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-l: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-m: -1px -2px 3px 1px rgba(255, 255, 255, 0.5),
+    0 1px 2px -1px rgba(255, 255, 255, 0.2);
+  --shadow-l: -2px -4px 4px 1px rgba(255, 255, 255, 0.7),
+    2px 4px 6px 0 rgba(0, 0, 0, 0.6);
   --radius: 0.625rem;
   --background: var(--color-gray-900);
   --foreground: oklch(0.147 0.004 49.25);
@@ -114,8 +116,8 @@
   --primary-foreground: oklch(0.216 0.006 56.043);
   --secondary: oklch(0.268 0.007 34.298);
   --secondary-foreground: oklch(0.985 0.001 106.423);
-  --muted: oklch(0.268 0.007 34.298);
-  --muted-foreground: oklch(0.709 0.01 56.259);
+  --muted: oklch(34.577% 0.01349 107.138);
+  --muted-foreground: oklch(55.577% 0.01 107);
   --accent: oklch(0.268 0.007 34.298);
   --accent-foreground: oklch(0.985 0.001 106.423);
   --destructive: oklch(0.704 0.191 22.216);

@@ -46,14 +46,14 @@ export default function NotificationPage() {
     <Box title="Notificações" subtitle="Mensagens da plataforma e do streamer">
       <div className="flex flex-col gap-2">
         {notifications.map((notification) => (
-          <>
+          <div key={notification.id}>
             {notification.type === 'normal' && (
               <DefaultNotificationCard notification={notification} />
             )}
             {notification.type === 'system' && (
               <SystemNotificationCard notification={notification} />
             )}
-          </>
+          </div>
         ))}
       </div>
     </Box>

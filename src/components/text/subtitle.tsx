@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 
 export default function Subtitle({ children }: PropsWithChildren) {
   return (
-    <h3 className="text-yellow-300 text-lg font-medium text-shadow-xs text-shadow-amber-400 ">
+    <h3 className="text-yellow-200 px-1 text-xl font-bold text-shadow-xs ">
       {children}
     </h3>
   )

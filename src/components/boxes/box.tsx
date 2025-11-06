@@ -19,8 +19,8 @@ export default function Box({
   return (
     <div
       className={twMerge(
-        'flex flex-col mb-2 mx-auto md:mx-0 px-4 md:p-4 pt-2 rounded-lg bg-gradient-to-b from-gray-900 to-gray-950 w-full pb-4  max-w-sm md:max-w-sm ',
-        showShadow ? 'shadow-l' : '',
+        'flex flex-col mb-2 mx-auto  md:mx-0 md:py-4 pt-1 rounded-lg bg-gradient-to-b from-gray-900 to-gray-950 w-full pb-4  max-w-sm md:max-w-sm ',
+        showShadow ? 'shadow-m' : '',
         className,
       )}
       {...props}
@@ -32,7 +32,7 @@ export default function Box({
         </span>
       )}
       <MainDivisor />
-      {children}
+      <div className="px-2">{children}</div>
     </div>
   )
 }
